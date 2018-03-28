@@ -10,11 +10,14 @@ const AddTestPage = props => (
     <h1>scoring page</h1>
     <TestForm
       onSubmit={(test) => {
-        console.log('added test', test);
         props.dispatch(addTest(test));
         props.history.push('/');
       }}
     />
+    <button
+      onClick={() => props.history.push('/')}
+    >Cancel
+    </button>
   </div>
 );
 

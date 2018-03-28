@@ -1,23 +1,45 @@
 import React from 'react';
 
 export default class Question extends React.Component {
-  constructor() {
-    super();
-    this.trueValue = 't';
-    this.falseValue = 'f';
+  constructor(props) {
+    super(props);
+    this.state = {
+      answer: props.answer,
+    };
   }
-  onHandleChange = ({ target: { value } }) => {
-    if (value === this.trueValue) {
-      return console.log(value);
+  handleInput = (e) => {
+    if (e.keyCode === 8) {
+      this.props.onHandleQuestionInput('', this.props.number);
+      return this.setState(() => ({ answer: '' }));
     }
-    if (value === this.falseValue) {
-      return console.log(this.falseValue);
+
+    let answer = e.target.value;
+    if (e.keyCode === 84 || e.keyCode === 70) {
+      if (e.keyCode === 84) {
+        answer = 't';
+      } else {
+        answer = 'f';
+      }
     }
-  };
+    if (answer === this.props.trueValue || answer === this.props.falseValue) {
+      this.props.onHandleQuestionInput(answer, this.props.number, e);
+      return this.setState(() => ({ answer }));
+    }
+    return undefined;
+  }
+  handleClickRemove = (e) => {
+    e.preventDefault();
+    this.setState(() => ({ answer: '' }));
+    this.props.onHandleQuestionInput('', this.props.number);
+  }
   render() {
     return (
       <div>
-        <input onChange={e => this.onHandleChange(e)} />
+        <input
+          onKeyDown={this.handleInput}
+          value={this.state.answer || ''}
+        />
+        <button onClick={e => this.handleClickRemove(e)}>X</button>
       </div>
     );
   }

@@ -4,35 +4,41 @@ import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 
-import { addTest } from '../actions/tests';
+import Question from './Question';
 
 class TestForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: props.name ? props.name : '',
-      testingDate: props.testingDate ? moment(props.testingDate) : moment(),
-      questions: props.questions ? props.questions : [],
+      scoreDate: props.scoreDate ? moment(props.scoreDate) : moment(),
+      questions: props.questions ? props.questions : [null, null, null],
+      trueValue: 't',
+      falseValue: 'f',
       calendarFocused: false,
       nameError: '',
-    }
+      qError: '',
+    };
   }
   componentWillMount() {
-    for (let i = 0; i < 30; i += 1) {
-      let n = i;
-      this.setState(prevState => ({
-        questions: prevState.questions.concat({ number: n, answer: true }),
-      }));
-      n += 1;
-    }
+    const convertTrueFalseToTFValues = this.state.questions.slice().map((q) => {
+      if (q !== null) {
+        if (q) {
+          return this.state.trueValue;
+        }
+        return this.state.falseValue;
+      }
+      return null;
+    });
+    this.setState(() => ({ questions: convertTrueFalseToTFValues }));
   }
   onNameChange = (e) => {
     const name = e.target.value;
     this.setState(() => ({ name, nameError: '' }));
   }
-  onDateChange = (testingDate) => {
-    if (testingDate) {
-      this.setState(() => ({ testingDate }));
+  onDateChange = (scoreDate) => {
+    if (scoreDate) {
+      this.setState(() => ({ scoreDate }));
     }
   }
   onFocusChange = ({ focused }) => {
@@ -40,20 +46,41 @@ class TestForm extends React.Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-    if (!this.state.name) {
-      return this.setState(() => ({ nameError: 'Please fill in \'name\' field' }));
+
+    const allValuesTorF = this.state.questions.reduce((acc, x) => ((x === 't' || x === 'f') ? acc && true : false), true);
+
+    if (allValuesTorF && this.state.name) {
+      return this.props.onSubmit({
+        name: this.state.name,
+        scoreDate: this.state.scoreDate.valueOf(),
+        questions: this.state.questions.map(x => x === 't'),
+      });
     }
-    return this.props.onSubmit({
-      name: this.state.name,
-      testingDate: this.state.testingDate.valueOf(),
-      questions: this.state.questions,
-    });
   };
+  onHandleQuestionInput = (qAns, qNum, e) => {
+    const questions = this.state.questions.slice();
+    if (!qAns) {
+      questions[qNum - 1] = null;
+    } else {
+      questions[qNum - 1] = (qAns === this.state.trueValue) ? 't' : 'f';
+      this.handleJumpNextInput(e);
+    }
+    this.setState(() => ({ questions }));
+  }
+  handleJumpNextInput = (e) => {
+    const { form } = e.target;
+    const index = Array.prototype.indexOf.call(form, e.target);
+    if (form.elements[index + 2]) {
+      form.elements[index + 2].focus();
+    }
+  }
   render() {
     return (
       <div>
         <form onSubmit={this.onSubmit}>
-          {this.state.nameError && <p>Please fill in &#39;name&#39; field</p>}
+          {this.state.nameError && <p>{this.state.nameError}</p>}
+          {this.state.qError && <p>{this.state.qError}</p>}
+
           <input
             type="text"
             placeholder="Name"
@@ -62,7 +89,7 @@ class TestForm extends React.Component {
             onChange={this.onNameChange}
           />
           <SingleDatePicker
-            date={this.state.testingDate}
+            date={this.state.scoreDate}
             onDateChange={this.onDateChange}
             focused={this.state.calendarFocused}
             onFocusChange={this.onFocusChange}
@@ -70,15 +97,41 @@ class TestForm extends React.Component {
             isOutsideRange={() => false}
           />
           <ol>
-            {this.state.questions.map(question => (
-              <li>
-                <input placeholder={question.answer.toString()} />
-              </li>
-            ))}
+            <li>
+              <Question
+                number={1}
+                trueValue={this.state.trueValue}
+                falseValue={this.state.falseValue}
+                onHandleQuestionInput={this.onHandleQuestionInput}
+                questionsArray={this.state.questions}
+                answer={this.state.questions[0]}
+              />
+            </li>
+            <li>
+              <Question
+                number={2}
+                trueValue={this.state.trueValue}
+                falseValue={this.state.falseValue}
+                onHandleQuestionInput={this.onHandleQuestionInput}
+                questionsArray={this.state.questions}
+                answer={this.state.questions[1]}
+              />
+            </li>
+            <li>
+              <Question
+                number={3}
+                trueValue={this.state.trueValue}
+                falseValue={this.state.falseValue}
+                onHandleQuestionInput={this.onHandleQuestionInput}
+                questionsArray={this.state.questions}
+                answer={this.state.questions[2]}
+              />
+            </li>
           </ol>
           <button>Submit
           </button>
-          {this.state.nameError && <span>Please fill in &#39;name&#39; field</span>}
+          {this.state.nameError && <span>{this.state.nameError}</span>}
+          {this.state.qError && <p>{this.state.qError}</p>}
         </form>
       </div>
     );

@@ -1,12 +1,10 @@
 import uuid from 'uuid';
-import moment from 'moment';
 
-export const addTest = ({ name, questions, testingDate } = []) => ({
+export const addTest = ({ name, questions, scoreDate } = []) => ({
   type: 'ADD_TEST',
   test: {
     name,
-    createdAt: moment().valueOf(),
-    testingDate,
+    scoreDate,
     id: uuid(),
     questions,
   },
@@ -17,12 +15,12 @@ export const removeTest = id => ({
     id,
   },
 });
-export const editTest = (id, { name, testingDate, questions }) => ({
+export const editTest = (id, { name, scoreDate, questions }) => ({
   type: 'EDIT_TEST',
   test: {
     id,
     name,
-    testingDate,
+    scoreDate,
     questions,
   },
 });

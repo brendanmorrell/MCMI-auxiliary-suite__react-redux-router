@@ -1,9 +1,7 @@
-import moment from 'moment';
-
 const filtersReducerDefaultState = {
   text: '',
-  startDate: moment().startOf('month'),
-  endDate: moment().endOf('month'),
+  startDate: undefined,
+  endDate: undefined,
   sortBy: 'scoreDate',
   rvsFilter: false,
 };
@@ -19,10 +17,15 @@ export default (state = filtersReducerDefaultState, action) => {
         ...state,
         sortBy: 'scoreDate',
       };
-    case 'SORT_BY_TEST_DATE':
+    case 'SORT_BY_FIRST_NAME':
       return {
         ...state,
-        sortBy: 'testDate',
+        sortBy: 'firstName',
+      };
+    case 'SORT_BY_LAST_NAME':
+      return {
+        ...state,
+        sortBy: 'lastName',
       };
     case 'SET_START_DATE':
       return {
@@ -38,6 +41,15 @@ export default (state = filtersReducerDefaultState, action) => {
       return {
         ...state,
         rvsFilter: !state.rvsFilter,
+      };
+    case 'CLEAR_ALL_FILTERS':
+      return {
+        ...state,
+        text: '',
+        startDate: undefined,
+        endDate: undefined,
+        sortBy: 'scoreDate',
+        rvsFilter: false,
       };
     default:
       return state;

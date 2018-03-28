@@ -9,12 +9,15 @@ const EditTestPage = (props) => {
     <div>
       <TestForm
         onSubmit={(test) => {
-          console.log('edited test', test);
           props.dispatch(editTest(props.test.id, test));
           props.history.push('/');
         }}
         {...props.test}
       />
+      <button
+        onClick={() => props.history.push('/')}
+      >Cancel Edits
+      </button>
     </div>
   );
 };

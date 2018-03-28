@@ -4,7 +4,11 @@ import { Link } from 'react-router-dom';
 
 import { removeTest } from '../actions/tests';
 
-const TestListItem = ({ dispatch, history, name, createdAt, id }) => (// eslint-disable-line
+const TestListItem = ({
+  dispatch,
+  name,
+  id,
+}) => (
   <div>
     <h1>{name}</h1>
     <button onClick={(e) => {

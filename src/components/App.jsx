@@ -16,37 +16,11 @@ const store = configureStore();
 
 const test1 = {
   name: 'brendan',
-  questions: [
-    {
-      number: 1,
-      answer: true,
-    },
-    {
-      number: 2,
-      answer: true,
-    },
-    {
-      number: 3,
-      answer: true,
-    },
-  ],
+  questions: [true, true, true],
 };
 const test2 = {
   name: 'erin',
-  questions: [
-    {
-      number: 1,
-      answer: false,
-    },
-    {
-      number: 2,
-      answer: false,
-    },
-    {
-      number: 3,
-      answer: false,
-    },
-  ],
+  questions: [false, false, false],
 };
 
 
