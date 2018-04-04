@@ -13,13 +13,17 @@ const AddTestPage = props => (
         props.dispatch(addTest(test));
         props.history.push('/');
       }}
+      trueValue={props.trueFalseValues.trueValue}
+      falseValue={props.trueFalseValues.falseValue}
+      onCancel={() => props.history.push('/')}
+      history={props.history}
     />
-    <button
-      onClick={() => props.history.push('/')}
-    >Cancel
-    </button>
   </div>
 );
 
 
-export default connect()(AddTestPage);
+const mapStateToProps = state => ({
+  trueFalseValues: state.trueFalseValues,
+});
+
+export default connect(mapStateToProps)(AddTestPage);
