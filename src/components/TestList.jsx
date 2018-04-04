@@ -10,7 +10,7 @@ const TestList = ({ tests }) => (
     <h1>Test List</h1>
     {tests.map((test) => {
       return (
-        <Link to={`/edit/${test.id}`}>
+        <Link to={`/results/${test.id}`}>
           <TestItem key={test.id} {...test} />
         </Link>
       );

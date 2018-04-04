@@ -22,7 +22,7 @@ export default () => (
         <Route exact path="/" component={TestDashboardPage} />
         <Route exact path="/scoring" component={AddTestPage} />
         <Route exact path="/edit/:id" component={EditTestPage} />
-        <Route exact path="/results" component={ResultsPage} />
+        <Route exact path="/results/:id" component={ResultsPage} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
