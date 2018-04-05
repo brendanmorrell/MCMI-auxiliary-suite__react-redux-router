@@ -3,4 +3,6 @@ public/dist/
 .env.development
 .env.test
 public/bundle.js
+public/bundle.js.map
 public/styles.css
+public/styles.css.map
