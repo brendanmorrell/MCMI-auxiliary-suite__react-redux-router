@@ -10,7 +10,6 @@ import getVisibleTests from '../selectors/tests';
 
 import '../styles/styles.scss';
 
-
 const store = configureStore();
 
 
@@ -30,7 +29,6 @@ store.subscribe(() => {
   console.log(state);
 });
 
-
 store.dispatch(addTest(test1));
 store.dispatch(addTest(test2));
 
@@ -39,7 +37,6 @@ const reduxProviderJSX = (
     <AppRouter />
   </Provider>
 );
-
 
 const appRoot = document.getElementById('app');
 ReactDOM.render(reduxProviderJSX, appRoot);

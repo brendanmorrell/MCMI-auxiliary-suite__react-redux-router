@@ -7,13 +7,21 @@ import TrueFalseSelector from './TrueFalseSelector';
 
 import Question from './Question';
 
+const generateQuestionList = () => {
+  const arr = [];
+  for (let i = 0; i < 195; i += 1) {
+    arr.push(null);
+  }
+  return arr;
+};
+
 class TestForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       name: props.name ? props.name : '',
       scoreDate: props.scoreDate ? moment(props.scoreDate) : moment(),
-      questions: props.questions ? props.questions : [null, null, null],
+      questions: props.questions ? props.questions : generateQuestionList(),
       trueValue: props.trueValue,
       falseValue: props.falseValue,
       calendarFocused: false,
@@ -134,36 +142,18 @@ class TestForm extends React.Component {
             isOutsideRange={() => false}
           />
           <ol>
-            <li>
-              <Question
-                number={1}
-                trueValue={this.state.trueValue}
-                falseValue={this.state.falseValue}
-                onHandleQuestionInput={this.onHandleQuestionInput}
-                questionsArray={this.state.questions}
-                answer={this.state.questions[0]}
-              />
-            </li>
-            <li>
-              <Question
-                number={2}
-                trueValue={this.state.trueValue}
-                falseValue={this.state.falseValue}
-                onHandleQuestionInput={this.onHandleQuestionInput}
-                questionsArray={this.state.questions}
-                answer={this.state.questions[1]}
-              />
-            </li>
-            <li>
-              <Question
-                number={3}
-                trueValue={this.state.trueValue}
-                falseValue={this.state.falseValue}
-                onHandleQuestionInput={this.onHandleQuestionInput}
-                questionsArray={this.state.questions}
-                answer={this.state.questions[2]}
-              />
-            </li>
+            {this.state.questions.map((q, idx) => (
+              <li>
+                <Question
+                  number={idx + 1}
+                  trueValue={this.state.trueValue}
+                  falseValue={this.state.falseValue}
+                  onHandleQuestionInput={this.onHandleQuestionInput}
+                  questionsArray={this.state.questions}
+                  answer={q}
+                />
+              </li>
+            ))}
           </ol>
           <button>Submit
           </button>

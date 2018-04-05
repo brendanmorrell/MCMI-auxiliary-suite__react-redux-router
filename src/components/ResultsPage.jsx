@@ -37,6 +37,11 @@ class ResultsPage extends React.Component {
   }
 
   render() {
+    const series1 = [
+      { x: '123', y: this.state.oneTwoThree },
+      { x: '12', y: this.state.oneTwo },
+      { x: '13', y: this.state.oneThree },
+    ];
     return (
       <div>
         {this.props.test.questions.map((q, idx) => <p>Question {idx}: {q.toString()}</p>)}
@@ -45,25 +50,35 @@ class ResultsPage extends React.Component {
           width={300}
           height={300}
           xDistance={100}
+          // onMouseEnter={(datapoint, event) => console.log(datapoint)}
         >
-          <VerticalGridLines />
-          <HorizontalGridLines />
-          <XAxis />
-          <YAxis />
-          <VerticalBarSeries
-            className="vertical-bar-series-example"
-            data={[
-              { x: '123', y: this.state.oneTwoThree },
-              { x: '12', y: this.state.oneTwo },
-              { x: '13', y: this.state.oneThree },
-            ]}
+          <VerticalGridLines
+            // style={{
+            //   stroke: 'violet',
+            //   strokeWidth: 3,
+            // }}
+          />
+          <HorizontalGridLines
+            // style={{
+            //   stroke: 'violet',
+            //   strokeWidth: 3,
+            // }}
+          />
+          <XAxis
+            // style={{
+            //   stroke: 'blue',
+            //   strokeWidth: 1,
+            // }}
+          />
+          <YAxis
+            // style={{
+            //   stroke: 'red',
+            //   strokeWidth: 1,
+            // }}
           />
           <VerticalBarSeries
-            data={[
-              { x: '123', y: this.state.oneTwoThree },
-              { x: '12', y: this.state.oneTwo },
-              { x: '13', y: this.state.oneThree },
-            ]}
+            className="vertical-bar-series-example"
+            data={series1}
           />
         </XYPlot>
       </div>
