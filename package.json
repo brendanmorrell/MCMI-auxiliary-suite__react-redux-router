@@ -8,7 +8,9 @@
     "build:dev": "webpack --env development",
     "build:prod": "webpack -p --env production",
     "dev-server": "webpack-dev-server --watch",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "start": "node server/server.js",
+    "heroku-postbuild": "yarn run build:prod"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
