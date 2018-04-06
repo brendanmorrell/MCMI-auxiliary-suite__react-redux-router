@@ -9,8 +9,8 @@ export default class Question extends React.Component {
     super(props);
     this.state = {
       answer: props.answer,
+      focused: false,
     };
-    console.log(this.state.answer);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({ answer: nextProps.answer });
@@ -31,7 +31,7 @@ export default class Question extends React.Component {
     }
     if (eChar === this.props.trueValue || eChar === this.props.falseValue) {
       this.props.onHandleQuestionInput(answer, this.props.number, e);
-      return this.setState(() => ({ answer }));
+      return this.setState(() => ({ answer, focused: false }));
     }
     return undefined;
   }
@@ -41,23 +41,44 @@ export default class Question extends React.Component {
     this.props.onHandleQuestionInput('', this.props.number);
   }
   handleClickFocused = () => {
+    this.setState({ focused: true });
   }
   returnLabelValue = () => {
-    if (this.state.answer === null) {
-      console.log('null');
-      return 'empty';
+    if (this.state.answer === null && !this.state.focused) {
+      return '________';
     }
-    console.log('true or false');
-    return this.state.answer === this.props.trueValue ? `true (${this.state.answer})` : `false (${this.state.answer})`;
+    if (this.state.focused) {
+      setTimeout(() => {
+        this.setState()
+      }, 500);
+      return '\xa0\xa0\xa0\xa0\xa0\xa0__\xa0\xa0\xa0\xa0\xa0\xa0';
+    }
+    return this.state.answer === this.props.trueValue ? `true \xa0(${this.state.answer})` : `false (${this.state.answer})`;
+  }
+  onBlur = () => {
+    this.setState({ focused: false });
+  }
+  onFocus = () => {
+    this.setState({ focused: true });
+  }
+  returnBackgroundColor = () => {
+    if (this.state.focused) {
+      return 'gainsboro';
+    }
+    return false;
   }
   render() {
     return (
       <div>
         <RaisedButton
+          onFocus={this.onFocus}
+          backgroundColor={this.returnBackgroundColor()}
           label={this.returnLabelValue()}
           onKeyDown={this.handleInput}
-          primary={this.state.answer === this.props.trueValue}
-          secondary={this.state.answer === this.props.falseValue}
+          onBlur={this.onBlur}
+          onClick={this.handleClickFocused}
+          primary={this.state.answer === this.props.trueValue && !this.state.focused}
+          secondary={this.state.answer === this.props.falseValue && !this.state.focused}
         />
         <button onClick={e => this.handleClickRemove(e)}>X</button>
       </div>
