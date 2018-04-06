@@ -1,5 +1,8 @@
 import React from 'react';
 import keycode from 'keycode';
+import RaisedButton from 'material-ui/RaisedButton';
+
+
 
 export default class Question extends React.Component {
   constructor(props) {
@@ -7,6 +10,7 @@ export default class Question extends React.Component {
     this.state = {
       answer: props.answer,
     };
+    console.log(this.state.answer);
   }
   componentWillReceiveProps(nextProps) {
     this.setState({ answer: nextProps.answer });
@@ -36,14 +40,25 @@ export default class Question extends React.Component {
     this.setState(() => ({ answer: '' }));
     this.props.onHandleQuestionInput('', this.props.number);
   }
+  handleClickFocused = () => {
+  }
+  returnLabelValue = () => {
+    if (this.state.answer === null) {
+      console.log('null');
+      return 'empty';
+    }
+    console.log('true or false');
+    return this.state.answer === this.props.trueValue ? `true (${this.state.answer})` : `false (${this.state.answer})`;
+  }
   render() {
     return (
       <div>
-        <input
+        <RaisedButton
+          label={this.returnLabelValue()}
           onKeyDown={this.handleInput}
-          value={this.state.answer || ''}
+          primary={this.state.answer === this.props.trueValue}
+          secondary={this.state.answer === this.props.falseValue}
         />
-        {this.state.answer && <span>{this.state.answer === this.props.trueValue ? 'true' : 'false'}</span>}
         <button onClick={e => this.handleClickRemove(e)}>X</button>
       </div>
     );

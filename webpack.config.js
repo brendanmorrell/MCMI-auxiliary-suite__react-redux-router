@@ -42,7 +42,7 @@ module.exports = (env) => {
     resolve: {
       extensions: ['.jsx', '.scss', '.js', 'css'],
     },
-    devtool: isProduction ? 'source-map' : 'inline-source-map',
+    devtool: isProduction ? 'source-map' : 'eval-source-map',
     devServer: {
       contentBase: path.join(__dirname, 'public'),
       historyApiFallback: true,

@@ -13,7 +13,7 @@ import {
 
 class ResultsPage extends React.Component {
   state = {
-    oneTwoThree: this.props.test.questions.reduce((acc,x) => {
+    oneTwoThree: this.props.test.questions.reduce((acc, x) => {
       let newAcc = acc;
       if (x) {
         newAcc += 1;
@@ -44,7 +44,6 @@ class ResultsPage extends React.Component {
     ];
     return (
       <div>
-        {this.props.test.questions.map((q, idx) => <p>Question {idx}: {q.toString()}</p>)}
         <XYPlot
           xType="ordinal"
           width={300}
@@ -81,6 +80,7 @@ class ResultsPage extends React.Component {
             data={series1}
           />
         </XYPlot>
+        {this.props.test.questions.map((q, idx) => <p>Question {idx}: {q.toString()}</p>)}
       </div>
     );
   }

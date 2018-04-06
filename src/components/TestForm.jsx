@@ -162,7 +162,7 @@ class TestForm extends React.Component {
         </form>
         <button
           onClick={this.handleCancel}
-        >Cancel EDIIIIIIIIIITS
+        >Cancel
         </button>
       </div>
     );

@@ -8,9 +8,14 @@ const TestListItem = ({
   dispatch,
   name,
   id,
+  scoreDate,
 }) => (
   <div>
-    <h1>{name}</h1>
+    <p>
+      <Link to={`/results/${id}`}>{name}</Link>
+      -
+      {scoreDate}
+    </p>
     <button onClick={(e) => {
       e.preventDefault();
       dispatch(removeTest(id));

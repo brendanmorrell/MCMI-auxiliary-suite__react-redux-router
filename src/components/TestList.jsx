@@ -8,13 +8,7 @@ import selectTests from '../selectors/tests';
 const TestList = ({ tests }) => (
   <div>
     <h1>Test List</h1>
-    {tests.map((test) => {
-      return (
-        <Link to={`/results/${test.id}`}>
-          <TestItem key={test.id} {...test} />
-        </Link>
-      );
-    })}
+    {tests.map(test => <TestItem key={test.id} {...test} />)}
   </div>
 );
 
