@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TestForm from './TestForm';
-import { addTest } from '../actions/tests';
+import { startAddTest } from '../actions/tests';
 
 
 const AddTestPage = props => (
@@ -10,7 +10,7 @@ const AddTestPage = props => (
     <h1>scoring page</h1>
     <TestForm
       onSubmit={(test) => {
-        props.dispatch(addTest(test));
+        props.dispatch(startAddTest(test));
         props.history.push('/');
       }}
       trueValue={props.trueFalseValues.trueValue}

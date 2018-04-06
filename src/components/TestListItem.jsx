@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { removeTest } from '../actions/tests';
+import { startRemoveTest } from '../actions/tests';
 
 const TestListItem = ({
   dispatch,
@@ -18,7 +18,7 @@ const TestListItem = ({
     </p>
     <button onClick={(e) => {
       e.preventDefault();
-      dispatch(removeTest(id));
+      dispatch(startRemoveTest(id));
     }}
     >X
     </button>

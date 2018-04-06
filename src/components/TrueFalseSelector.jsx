@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setTrue, setFalse } from '../actions/trueFalseValues';
+import { startSetTrue, startSetFalse } from '../actions/trueFalseValues';
 
 class TrueFalseSelector extends React.Component {
   constructor(props) {
@@ -33,8 +33,8 @@ class TrueFalseSelector extends React.Component {
   }
   onCancel = () => {
     console.log('true false state triggered this');
-    this.props.dispatch(setTrue(this.state.trueValueOnMount));
-    this.props.dispatch(setFalse(this.state.falseValueOnMount));
+    this.props.dispatch(startSetTrue(this.state.trueValueOnMount));
+    this.props.dispatch(startSetFalse(this.state.falseValueOnMount));
     this.props.history.push('/');
   }
   handleChangeTrueValue = (e) => {
@@ -43,7 +43,7 @@ class TrueFalseSelector extends React.Component {
       const trueValue = e.target.value;
       this.props.onChangeTrue(trueValue);
       this.setState(() => ({ trueValue }));
-      this.props.dispatch(setTrue(trueValue));
+      this.props.dispatch(startSetTrue(trueValue));
     }
   }
   handleChangeFalseValue = (e) => {
@@ -52,7 +52,7 @@ class TrueFalseSelector extends React.Component {
       const falseValue = e.target.value;
       this.props.onChangeFalse(falseValue);
       this.setState(() => ({ falseValue }));
-      this.props.dispatch(setFalse(falseValue));
+      this.props.dispatch(startSetFalse(falseValue));
     }
   }
   render() {

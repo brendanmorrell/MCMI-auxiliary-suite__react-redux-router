@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import TestForm from './TestForm';
-import { editTest } from '../actions/tests';
+import { startEditTest } from '../actions/tests';
 
 const EditTestPage = props => (
   <div>
     <TestForm
       onSubmit={(test) => {
-        props.dispatch(editTest(props.test.id, test));
+        props.dispatch(startEditTest(props.test.id, test));
         props.history.push('/');
       }}
       history={props.history}

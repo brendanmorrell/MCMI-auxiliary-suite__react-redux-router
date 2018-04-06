@@ -9,7 +9,7 @@ import Question from './Question';
 
 const generateQuestionList = () => {
   const arr = [];
-  for (let i = 0; i < 195; i += 1) {
+  for (let i = 0; i < 3; i += 1) {
     arr.push(null);
   }
   return arr;

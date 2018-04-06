@@ -1,7 +1,11 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+
 import testsReducer from '../reducers/tests';
 import filtersReducer from '../reducers/filters';
 import trueFalseReducer from '../reducers/trueFalseValues';
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;// eslint-disable-line
 
 export default () => {
   const store = createStore(
@@ -10,7 +14,7 @@ export default () => {
       filters: filtersReducer,
       trueFalseValues: trueFalseReducer,
     }),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(), // eslint-disable-line
+    composeEnhancers(applyMiddleware(thunk)),
   );
 
   return store;

@@ -1,20 +1,36 @@
-import uuid from 'uuid';
+import database from '../firebase/firebase';
 
-export const addTest = ({ name, questions, scoreDate } = []) => ({
+export const addTest = (test = []) => ({
   type: 'ADD_TEST',
-  test: {
-    name,
-    scoreDate,
-    id: uuid(),
-    questions,
-  },
+  test,
 });
+
+export const startAddTest = (testData = {}) => (dispatch) => {
+  const {
+    name,
+    questions,
+    scoreDate,
+  } = testData;
+
+  const test = { name, questions, scoreDate };
+
+  database.ref('tests').push({ test })
+    .then(ref => dispatch(addTest({
+      id: ref.key,
+      ...test,
+    })));
+};
+
 export const removeTest = id => ({
   type: 'REMOVE_TEST',
   test: {
     id,
   },
 });
+export const startRemoveTest = id => (dispatch) => {
+  database.ref(`tests/${id}`).remove()
+    .then(() => dispatch(removeTest(id)));
+};
 export const editTest = (id, { name, scoreDate, questions }) => ({
   type: 'EDIT_TEST',
   test: {
@@ -23,4 +39,9 @@ export const editTest = (id, { name, scoreDate, questions }) => ({
     scoreDate,
     questions,
   },
+});
+export const startEditTest = ((id, testData) => (dispatch) => {
+  database.ref(`tests/${id}`)
+    .set({ ...testData })
+    .then(() => dispatch(editTest(id, testData)));
 });
