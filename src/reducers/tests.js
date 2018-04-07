@@ -13,6 +13,8 @@ export default (state = testsReducerDefaultState, action) => {
         const updatedObj = test.id !== action.test.id ? test : { ...test, ...action.test };
         return updatedObj;
       });
+    case 'SET_TESTS':
+      return action.tests;
     default:
       return state;
   }

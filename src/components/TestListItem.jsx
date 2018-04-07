@@ -1,28 +1,24 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 import { startRemoveTest } from '../actions/tests';
 
-const TestListItem = ({
-  dispatch,
-  name,
-  id,
-  scoreDate,
-}) => (
+const TestListItem = props => (
   <div>
     <p>
-      <Link to={`/results/${id}`}>{name}</Link>
+      <Link to={`/results/${props.id}`}>{props.name}</Link>
       -
-      {scoreDate}
+      {moment(props.scoreDate).format('MMMM Do, YYYY')}
     </p>
     <button onClick={(e) => {
       e.preventDefault();
-      dispatch(startRemoveTest(id));
+      dispatch(startRemoveTest(props.id));
     }}
     >X
     </button>
-    <Link to={`/edit/${id}`}>Edit</Link>
+    <Link to={`/edit/${props.id}`}>Edit</Link>
   </div>
 );
 

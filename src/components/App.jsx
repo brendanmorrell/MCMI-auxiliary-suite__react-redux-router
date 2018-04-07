@@ -8,6 +8,7 @@ import '../firebase/firebase';
 import AppRouter from '../routers/AppRouter';
 import configureStore from '../store/configure';
 import getVisibleTests from '../selectors/tests';
+// import { startSetTests } from '../actions/tests';
 
 import '../styles/styles.scss';
 
@@ -27,6 +28,13 @@ const reduxProviderJSX = (
     </MuiThemeProvider>
   </Provider>
 );
-
 const appRoot = document.getElementById('app');
+
+
+// ReactDOM.render(<p>loading</p>, appRoot);
 ReactDOM.render(reduxProviderJSX, appRoot);
+
+
+// store.dispatch(startSetTests()).then(() => {
+// ReactDOM.render(reduxProviderJSX, appRoot);
+// });
