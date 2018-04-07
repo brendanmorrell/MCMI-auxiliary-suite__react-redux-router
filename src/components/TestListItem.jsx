@@ -14,7 +14,7 @@ const TestListItem = props => (
     </p>
     <button onClick={(e) => {
       e.preventDefault();
-      dispatch(startRemoveTest(props.id));
+      props.dispatch(startRemoveTest(props.id));
     }}
     >X
     </button>
