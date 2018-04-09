@@ -28,8 +28,9 @@ export const removeTest = id => ({
     id,
   },
 });
-export const startRemoveTest = id => (dispatch) => {
-  database.ref(`tests/${id}`).remove()
+export const startRemoveTest = id => (dispatch, getState) => {
+  const { uid } = getState().auth;
+  database.ref(`users/${uid}/tests/${id}`).remove()
     .then(() => dispatch(removeTest(id)));
 };
 export const editTest = (id, { name, scoreDate, questions }) => ({
@@ -43,8 +44,9 @@ export const editTest = (id, { name, scoreDate, questions }) => ({
 });
 
 export const startEditTest = (id, testData) => {
-  return (dispatch) => {
-    return database.ref(`tests/${id}`)
+  return (dispatch, getState) => {
+    const { uid } = getState().auth;
+    return database.ref(`users/${uid}/tests/${id}`)
       .set({ ...testData })
       .then(() => dispatch(editTest(id, testData)));
   };
@@ -58,8 +60,9 @@ export const setTests = tests => ({
 
 
 export const startSetTests = () => {
-  return (dispatch) => {
-    return database.ref('tests')
+  return (dispatch, getState) => {
+    const { uid } = getState().auth;
+    return database.ref(`users/${uid}/tests`)
       .once('value')
       .then((snapshot) => {
         const tests = [];
