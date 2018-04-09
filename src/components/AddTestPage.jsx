@@ -11,11 +11,11 @@ const AddTestPage = props => (
     <TestForm
       onSubmit={(test) => {
         props.dispatch(startAddTest(test));
-        props.history.push('/');
+        props.history.push('/dashboard');
       }}
       trueValue={props.trueFalseValues.trueValue}
       falseValue={props.trueFalseValues.falseValue}
-      onCancel={() => props.history.push('/')}
+      onCancel={() => props.history.push('/dashboard')}
       history={props.history}
     />
   </div>

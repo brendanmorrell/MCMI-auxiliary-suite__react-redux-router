@@ -5,7 +5,7 @@ export const setTrue = trueValue => ({
   trueValue,
 });
 export const startSetTrue = trueValue => (dispatch) => {
-  database.ref('trueFalseValues')
+  return database.ref('trueFalseValues')
     .update({ trueValue })
     .then(() => dispatch(setTrue(trueValue)));
 };
@@ -16,7 +16,19 @@ export const setFalse = falseValue => ({
 });
 
 export const startSetFalse = falseValue => (dispatch) => {
-  database.ref('trueFalseValues')
+  return database.ref('trueFalseValues')
     .update({ falseValue })
     .then(() => dispatch(setFalse(falseValue)));
+};
+
+export const getTrueFalseValues = () => {
+  return (dispatch) => {
+    return database.ref('trueFalseValues')
+      .once('value')
+      .then((snapshot) => {
+        const { trueValue, falseValue } = snapshot.val();
+        dispatch(startSetTrue(trueValue));
+        dispatch(startSetFalse(falseValue));
+      });
+  };
 };

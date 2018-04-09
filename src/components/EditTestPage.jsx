@@ -9,7 +9,7 @@ const EditTestPage = props => (
     <TestForm
       onSubmit={(test) => {
         props.dispatch(startEditTest(props.test.id, test));
-        props.history.push('/');
+        props.history.push('/dashboard');
       }}
       history={props.history}
       {...props.test}

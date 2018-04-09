@@ -1,8 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import { startLogin } from '../actions/auth';
 
-export default () => (
+const LoginPage = props => (
   <div>
-    <h1>login page</h1>
+    <button
+      onClick={() => props.dispatch(startLogin())}
+    >
+      Login
+    </button>
   </div>
 );
+
+export default connect()(LoginPage);

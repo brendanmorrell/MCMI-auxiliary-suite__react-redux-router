@@ -18,7 +18,6 @@ class TrueFalseSelector extends React.Component {
     this.onMount();
   }
   componentWillReceiveProps(nextProps) {
-    console.log(this.state);
     this.setState(() => ({ formCancelled: nextProps.formCancelled }), () => {
       if (this.state.formCancelled) {
         this.onCancel();
@@ -32,10 +31,9 @@ class TrueFalseSelector extends React.Component {
     }));
   }
   onCancel = () => {
-    console.log('true false state triggered this');
     this.props.dispatch(startSetTrue(this.state.trueValueOnMount));
     this.props.dispatch(startSetFalse(this.state.falseValueOnMount));
-    this.props.history.push('/');
+    this.props.history.push('/dashboard');
   }
   handleChangeTrueValue = (e) => {
     e.preventDefault();
