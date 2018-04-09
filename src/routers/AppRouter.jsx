@@ -13,6 +13,8 @@ import ResultsPage from '../components/ResultsPage';
 import NotFoundPage from '../components/NotFoundPage';
 import EditTestPage from '../components/EditTestPage';
 import PrivateRoute from './PrivateRoute';
+import PublicRoute from './PublicRoute';
+
 
 export const history = createHistory();
 
@@ -20,7 +22,7 @@ export default () => (
   <Router history={history}>
     <div>
       <Switch>
-        <Route exact path="/" component={LoginPage} />
+        <PublicRoute exact path="/" component={LoginPage} />
         <PrivateRoute exact path="/dashboard" component={TestDashboardPage} />
         <PrivateRoute exact path="/scoring" component={AddTestPage} />
         <PrivateRoute exact path="/edit/:id" component={EditTestPage} />
