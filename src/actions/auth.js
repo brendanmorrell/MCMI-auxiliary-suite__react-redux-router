@@ -8,8 +8,7 @@ export const login = uid => ({
 export const startLogin = () =>
   () =>
     firebase.auth()
-      .signInWithPopup(googleAuthProvider)
-      .catch(e => console.log(e));
+      .signInWithPopup(googleAuthProvider);
 
 export const logout = () => ({
   type: 'LOGOUT',
@@ -18,5 +17,4 @@ export const logout = () => ({
 export const startLogout = () =>
   () =>
     firebase.auth()
-      .signOut()
-      .catch(e => console.log(e));
+      .signOut();
