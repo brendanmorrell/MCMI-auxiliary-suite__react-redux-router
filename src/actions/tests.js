@@ -5,7 +5,8 @@ export const addTest = (test = []) => ({
   test,
 });
 
-export const startAddTest = (testData = {}) => (dispatch) => {
+export const startAddTest = (testData = {}) => (dispatch, getState) => {
+  const { uid } = getState().auth;
   const {
     name,
     questions,
@@ -14,7 +15,7 @@ export const startAddTest = (testData = {}) => (dispatch) => {
 
   const test = { name, questions, scoreDate };
 
-  database.ref('tests').push({ test })
+  database.ref(`users/${uid}/tests`).push({ test })
     .then(ref => dispatch(addTest({
       id: ref.key,
       ...test,

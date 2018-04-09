@@ -26,7 +26,9 @@ export const getTrueFalseValues = () => {
     return database.ref('trueFalseValues')
       .once('value')
       .then((snapshot) => {
-        const { trueValue, falseValue } = snapshot.val();
+        const trueValue = snapshot.val() && snapshot.val().trueValue ? snapshot.val().trueValue : 't';
+        const falseValue = snapshot.val() && snapshot.val().falseValue ? snapshot.val().falseValue : 'f';
+
         dispatch(startSetTrue(trueValue));
         dispatch(startSetFalse(falseValue));
       });
