@@ -11,6 +11,7 @@ import getVisibleTests from '../selectors/tests';
 import { startSetTests } from '../actions/tests';
 import { getTrueFalseValues } from '../actions/trueFalseValues';
 import { login, logout } from '../actions/auth';
+import LoadingPage from './LoadingPage';
 
 import '../styles/styles.scss';
 
@@ -33,7 +34,7 @@ const reduxProviderJSX = (
 const appRoot = document.getElementById('app');
 
 
-ReactDOM.render(<p>loading</p>, appRoot);
+ReactDOM.render(<LoadingPage />, appRoot);
 
 let hasRendered = false;
 

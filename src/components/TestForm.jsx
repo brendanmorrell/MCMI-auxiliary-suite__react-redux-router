@@ -22,6 +22,7 @@ class TestForm extends React.Component {
       name: props.name ? props.name : '',
       scoreDate: props.scoreDate ? moment(props.scoreDate) : moment(),
       questions: props.questions ? props.questions : generateQuestionList(),
+      note: props.note ? props.note : null,
       trueValue: props.trueValue,
       falseValue: props.falseValue,
       calendarFocused: false,
@@ -73,6 +74,7 @@ class TestForm extends React.Component {
         name: this.state.name,
         scoreDate: this.state.scoreDate.valueOf(),
         questions: this.state.questions.map(x => x === this.state.trueValue),
+        note: this.state.note,
       });
     }
     return undefined;
@@ -88,6 +90,21 @@ class TestForm extends React.Component {
     }
     this.setState(() => ({ questions }));
   }
+  onNoteChange = (e) => {
+    const note = e.target.value;
+    this.setState(() => ({ note }));
+  };
+  handleCancel = (e) => {
+    e.preventDefault();
+    this.setState(() => ({ formCancelled: true }));
+  }
+  handleJumpNextInput = (e) => {
+    const { form } = e.target;
+    const index = Array.prototype.indexOf.call(form, e.target);
+    if (form.elements[index + 2]) {
+      form.elements[index + 2].focus();
+    }
+  }
   convertQAnswersToNewTFValues = (prevTrue) => {
     const convertQAnswersToNewTFValues = this.state.questions.slice().map((q) => {
       if (q !== null) {
@@ -100,33 +117,18 @@ class TestForm extends React.Component {
     });
     this.setState(() => ({ questions: convertQAnswersToNewTFValues }));
   }
-  handleJumpNextInput = (e) => {
-    const { form } = e.target;
-    const index = Array.prototype.indexOf.call(form, e.target);
-    if (form.elements[index + 2]) {
-      form.elements[index + 2].focus();
-    }
-  }
-  handleCancel = (e) => {
-    e.preventDefault();
-    this.setState(() => ({ formCancelled: true }));
-  }
   render() {
     return (
       <div>
-        <TrueFalseSelector
-          trueValue={this.state.trueValue}
-          falseValue={this.state.falseValue}
-          onChangeTrue={this.onChangeTrue}
-          onChangeFalse={this.onChangeFalse}
-          formCancelled={this.state.formCancelled}
-          history={this.props.history}
-        />
-        <form onSubmit={this.onSubmit}>
-          {this.state.nameError && <p>{this.state.nameError}</p>}
-          {this.state.qError && <p>{this.state.qError}</p>}
+        <form
+          className="form"
+          onSubmit={this.onSubmit}
+        >
+          {this.state.nameError && <p className="form__error">{this.state.nameError}</p>}
+          {this.state.qError && <p className="form__error">{this.state.qError}</p>}
 
           <input
+            className="text-input"
             type="text"
             placeholder="Name"
             autoFocus// eslint-disable-line
@@ -141,29 +143,54 @@ class TestForm extends React.Component {
             numberOfMonths={1}
             isOutsideRange={() => false}
           />
-          <ol>
-            {this.state.questions.map((q, idx) => (
-              <li>
-                <Question
-                  number={idx + 1}
-                  trueValue={this.state.trueValue}
-                  falseValue={this.state.falseValue}
-                  onHandleQuestionInput={this.onHandleQuestionInput}
-                  questionsArray={this.state.questions}
-                  answer={q}
-                />
-              </li>
-            ))}
-          </ol>
-          <button>Submit
-          </button>
+          <div className="form__content-container-two-items">
+            <div>
+              <TrueFalseSelector
+                trueValue={this.state.trueValue}
+                falseValue={this.state.falseValue}
+                onChangeTrue={this.onChangeTrue}
+                onChangeFalse={this.onChangeFalse}
+                formCancelled={this.state.formCancelled}
+                history={this.props.history}
+              />
+              <ol>
+                {this.state.questions.map((q, idx) => (
+                  <li>
+                    <Question
+                      number={idx + 1}
+                      trueValue={this.state.trueValue}
+                      falseValue={this.state.falseValue}
+                      onHandleQuestionInput={this.onHandleQuestionInput}
+                      questionsArray={this.state.questions}
+                      answer={q}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <textarea
+              className="text-area"
+              placeholder="Test notes (optional)"
+              value={this.state.note}
+              onChange={this.onNoteChange}
+            />
+          </div>
+          <div className="form__content-container-two-items">
+            <button
+              className="button"
+            >
+              {this.props.editTestPage ? <span>Save Changes</span> : <span>Save New Test</span> }
+            </button>
+            <button
+              className="button--secondary"
+              onClick={this.handleCancel}
+            >
+              {this.props.editTestPage ? <span>Cancel Changes</span> : <span>Cancel New Test</span> }
+            </button>
+          </div>
           {this.state.nameError && <span>{this.state.nameError}</span>}
           {this.state.qError && <p>{this.state.qError}</p>}
         </form>
-        <button
-          onClick={this.handleCancel}
-        >Cancel
-        </button>
       </div>
     );
   }

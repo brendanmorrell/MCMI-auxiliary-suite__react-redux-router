@@ -6,15 +6,25 @@ import { startEditTest } from '../actions/tests';
 
 const EditTestPage = props => (
   <div>
-    <TestForm
-      onSubmit={(test) => {
-        props.dispatch(startEditTest(props.test.id, test));
-        props.history.push('/dashboard');
-      }}
-      history={props.history}
-      {...props.test}
-      {...props.trueFalseValues}
-    />
+    <div className="page-header">
+      <div className="content-container">
+        <h1 className="page-header__title">
+          Edit Test: <strong>{props.test.name}</strong>
+        </h1>
+      </div>
+    </div>
+    <div className="content-container">
+      <TestForm
+        onSubmit={(test) => {
+          props.dispatch(startEditTest(props.test.id, test));
+          props.history.push('/dashboard');
+        }}
+        history={props.history}
+        {...props.test}
+        {...props.trueFalseValues}
+        editTestPage
+      />
+    </div>
   </div>
 );
 

@@ -11,9 +11,15 @@ export const startAddTest = (testData = {}) => (dispatch, getState) => {
     name,
     questions,
     scoreDate,
+    note = '',
   } = testData;
 
-  const test = { name, questions, scoreDate };
+  const test = {
+    name,
+    questions,
+    scoreDate,
+    note,
+  };
 
   database.ref(`users/${uid}/tests`).push({ test })
     .then(ref => dispatch(addTest({
@@ -33,13 +39,19 @@ export const startRemoveTest = id => (dispatch, getState) => {
   database.ref(`users/${uid}/tests/${id}`).remove()
     .then(() => dispatch(removeTest(id)));
 };
-export const editTest = (id, { name, scoreDate, questions }) => ({
+export const editTest = (id, {
+  name,
+  scoreDate,
+  questions,
+  note = '',
+}) => ({
   type: 'EDIT_TEST',
   test: {
     id,
     name,
     scoreDate,
     questions,
+    note,
   },
 });
 

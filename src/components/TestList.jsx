@@ -7,11 +7,25 @@ import TestListItem from './TestListItem';
 import selectTests from '../selectors/tests';
 
 const TestList = ({ tests }) => (
-  <div>
-    <h1>Test List</h1>
-    <FlipMove duration={750} easing="ease-out">
-      {tests.map(test => <TestListItem key={test.id} {...test} />)}
-    </FlipMove>
+  <div className="content-container">
+    <div className="list-header">
+      <div className="show-for-mobile">Tests</div>
+      <div className="show-for-desktop">Tests</div>
+      <div className="show-for-desktop">Date</div>
+    </div>
+    <div className="list-body">
+      <FlipMove duration={750} easing="ease-out">
+        {
+          tests.length === 0 ? (
+            <div className="list-item list-item--message">
+              <span>No expenses</span>
+            </div>
+          ) : (
+            tests.map(test => <TestListItem key={test.id} {...test} />)
+          )
+        }
+      </FlipMove>
+    </div>
   </div>
 );
 

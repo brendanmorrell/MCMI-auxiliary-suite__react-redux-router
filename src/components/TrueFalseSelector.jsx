@@ -54,15 +54,18 @@ class TrueFalseSelector extends React.Component {
     }
   }
   render() {
+    const placeholderTextTrue = `True: ${this.state.trueValue.toUpperCase()}`;
+    const placeholderTextFalse = `False: ${this.state.falseValue.toUpperCase()}`;
+
     return (
       <div>
         <input
-          placeholder={this.state.trueValue}
+          placeholder={placeholderTextTrue}
           onChange={e => this.handleChangeTrueValue(e)}
           value={this.state.emptyValue}
         />
         <input
-          placeholder={this.state.falseValue}
+          placeholder={placeholderTextFalse}
           onChange={this.handleChangeFalseValue}
           value={this.state.emptyValue}
         />

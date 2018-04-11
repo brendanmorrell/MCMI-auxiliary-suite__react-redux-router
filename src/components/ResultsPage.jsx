@@ -44,6 +44,13 @@ class ResultsPage extends React.Component {
     ];
     return (
       <div>
+        <div className="page-header">
+          <div className="content-container">
+            <h1 className="page-header__title">
+              Results for <strong>{this.props.test.name}</strong>
+            </h1>
+          </div>
+        </div>
         <XYPlot
           xType="ordinal"
           width={300}
@@ -81,6 +88,12 @@ class ResultsPage extends React.Component {
           />
         </XYPlot>
         {this.props.test.questions.map((q, idx) => <p>Question {idx}: {q.toString()}</p>)}
+        {this.props.test.note &&
+          <div>
+            <h3>Notes</h3>
+            <p>{this.props.test.note}</p>
+          </div>
+        }
       </div>
     );
   }

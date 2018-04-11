@@ -56,112 +56,129 @@ class TestListFilters extends React.Component {
     const { from, to } = this.state;
     const modifiers = { start: from, end: to };
     return (
-      <div>
-        <p>
-          <button
-            onClick={() => {
-              this.setState(() => ({ to: undefined, from: undefined }));
-              this.props.dispatch(clearAllFilters());
-            }}
-          >Clear All Filters
-          </button>
-        </p>
-        <input
-          type="text"
-          value={this.props.text}
-          onChange={(e) => {
-            this.props.dispatch(setTextFilter(e.target.value));
-          }}
-        />
-        <select
-          value={this.props.sortBy}
-          onChange={(e) => {
-            if (e.target.value === 'scoreDate') {
-              console.log('switched to scoreDate');
-              this.props.dispatch(sortByScoreDate());
-            }
-            if (e.target.value === 'firstName') {
-              console.log('switched to firstName');
-              this.props.dispatch(sortByFirstName());
-            }
-            // if (e.target.value === 'lastName') {
-            //   console.log('switched to lastName');
-            //   this.props.dispatch(sortByLastName());
-            // }
-          }}
-        >
-          <option value="scoreDate">Score Date</option>
-          <option value="firstName">Name</option>
-          {/* <option value="lastName">Last Name</option> */}
-        </select>
-        <button
-          onClick={() => {
-            this.props.dispatch(setRvsFilter());
-          }}
-        >Reverse
-        </button>
-        <div className="InputFromTo">
-          <DayPickerInput
-            value={from}
-            placeholder="From"
-            format="LL"
-            formatDate={formatDate}
-            parseDate={parseDate}
-            dayPickerProps={{
-              selectedDays: [from, { from, to }],
-              disabledDays: { after: to },
-              toMonth: to,
-              modifiers,
-              numberOfMonths: 2,
-            }}
-            onDayChange={this.handleFromChange}
-          />{' '}
-        —{' '}
-          <span className="InputFromTo-to">
-            <DayPickerInput
-              ref={el => (this.to = el)}
-              value={to}
-              placeholder="To"
-              format="LL"
-              formatDate={formatDate}
-              parseDate={parseDate}
-              dayPickerProps={{
-                selectedDays: [from, { from, to }],
-                disabledDays: { before: from },
-                modifiers,
-                month: from,
-                fromMonth: from,
-                numberOfMonths: 2,
-              }}
-              onDayChange={this.handleToChange}
-            />
-          </span>
-          <Helmet>
-            <style>{`
-  .InputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
-    background-color: #f0f8ff !important;
-    color: #4a90e2;
-  }
-  .InputFromTo .DayPicker-Day {
-    border-radius: 0 !important;
-  }
-  .InputFromTo .DayPicker-Day--start {
-    border-top-left-radius: 50% !important;
-    border-bottom-left-radius: 50% !important;
-  }
-  .InputFromTo .DayPicker-Day--end {
-    border-top-right-radius: 50% !important;
-    border-bottom-right-radius: 50% !important;
-  }
-  .InputFromTo .DayPickerInput-Overlay {
-    width: 550px;
-  }
-  .InputFromTo-to .DayPickerInput-Overlay {
-    margin-left: -198px;
-  }
-`}
-            </style>
-          </Helmet>
+      <div className="content-container">
+        <div className="input-group">
+          <div className="input-group__row">
+            <p>
+              <button
+                onClick={() => {
+                  this.setState(() => ({ to: undefined, from: undefined }));
+                  this.props.dispatch(clearAllFilters());
+                }}
+              >Clear All Filters
+              </button>
+            </p>
+          </div>
+          <div className="input-group__row">
+            <div className="input-group__row-item">
+              <input
+                className="text-input"
+                placeholder="Search tests"
+                type="text"
+                value={this.props.text}
+                onChange={(e) => {
+                  this.props.dispatch(setTextFilter(e.target.value));
+                }}
+              />
+            </div>
+            <div className="input-group__row-item">
+              <select
+                className="select"
+                value={this.props.sortBy}
+                onChange={(e) => {
+                  if (e.target.value === 'scoreDate') {
+                    console.log('switched to scoreDate');
+                    this.props.dispatch(sortByScoreDate());
+                  }
+                  if (e.target.value === 'firstName') {
+                    console.log('switched to firstName');
+                    this.props.dispatch(sortByFirstName());
+                  }
+                  // if (e.target.value === 'lastName') {
+                  //   console.log('switched to lastName');
+                  //   this.props.dispatch(sortByLastName());
+                  // }
+                }}
+              >
+                <option value="scoreDate">Score Date</option>
+                <option value="firstName">Name</option>
+                {/* <option value="lastName">Last Name</option> */}
+              </select>
+            </div>
+            <div className="input-group__row-item">
+              <button
+                onClick={() => {
+                  this.props.dispatch(setRvsFilter());
+                }}
+              >Reverse
+              </button>
+            </div>
+          </div>
+          <div className="input-group__row">
+            <div className="InputFromTo">
+              <DayPickerInput
+                value={from}
+                placeholder="From"
+                format="LL"
+                formatDate={formatDate}
+                parseDate={parseDate}
+                dayPickerProps={{
+                  selectedDays: [from, { from, to }],
+                  disabledDays: { after: to },
+                  toMonth: to,
+                  modifiers,
+                  numberOfMonths: 2,
+                }}
+                onDayChange={this.handleFromChange}
+              />{' '}
+            —>{' '}
+              <span className="InputFromTo-to">
+                <DayPickerInput
+                  ref={el => (this.to = el)}
+                  value={to}
+                  placeholder="To"
+                  format="LL"
+                  formatDate={formatDate}
+                  parseDate={parseDate}
+                  dayPickerProps={{
+                    selectedDays: [from, { from, to }],
+                    disabledDays: { before: from },
+                    modifiers,
+                    month: from,
+                    fromMonth: from,
+                    numberOfMonths: 2,
+                  }}
+                  onDayChange={this.handleToChange}
+                />
+              </span>
+              <Helmet>
+                <style>{`
+      .InputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+        background-color: #f0f8ff !important;
+        color: #4a90e2;
+      }
+      .InputFromTo .DayPicker-Day {
+        border-radius: 0 !important;
+      }
+      .InputFromTo .DayPicker-Day--start {
+        border-top-left-radius: 50% !important;
+        border-bottom-left-radius: 50% !important;
+      }
+      .InputFromTo .DayPicker-Day--end {
+        border-top-right-radius: 50% !important;
+        border-bottom-right-radius: 50% !important;
+      }
+      .InputFromTo .DayPickerInput-Overlay {
+        width: 550px;
+      }
+      .InputFromTo-to .DayPickerInput-Overlay {
+        margin-left: -198px;
+      }
+    `}
+                </style>
+              </Helmet>
+            </div>
+          </div>
         </div>
       </div>
     );

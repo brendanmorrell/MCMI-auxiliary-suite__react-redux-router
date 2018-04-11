@@ -6,7 +6,6 @@ import TestListSummary from './TestListSummary';
 
 export default () => (
   <div>
-    <h1>dashboard page</h1>
     <TestListSummary total={12} />
     <TestListFilters />
     <TestList />
