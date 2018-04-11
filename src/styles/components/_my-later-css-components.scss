@@ -1,0 +1,16 @@
+.edit-remove-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width:113px;
+  button {
+    margin-bottom: $m-size;
+  }
+  > * {
+    width: 10rem;
+    text-align: center;
+  }
+  @media (max-width: $desktop-breakpoint * .7) {
+    width: 20%;
+  }
+}

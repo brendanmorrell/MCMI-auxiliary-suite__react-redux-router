@@ -5,29 +5,41 @@ import moment from 'moment';
 
 import { startRemoveTest } from '../actions/tests';
 
-const TestListItem = props => (
-  <div className="list-item">
-    <div>
-      <Link to={`/results/${props.id}`}>
+class TestListItem extends React.Component {
+  constructor() {
+    super();
+    console.log();
+  }
+  render() {
+    return (
+      <div className="list-item">
         <div>
-          <h3 className="list-item__title">{props.name}</h3>
-          <span className="list-item__subtitle">{moment(props.scoreDate).format('MMMM Do, YYYY')}</span>
-          <p className="list-item__data">This is a bunch of data</p>
+          <Link to={`/results/${this.props.id}`}>
+            <div>
+              <h3 className="list-item__title">{this.props.name}</h3>
+              <span className="list-item__subtitle">{moment(this.props.scoreDate).format('MMMM Do, YYYY')}</span>
+            </div>
+          </Link>
         </div>
-      </Link>
-    </div>
-    <div>
-      <h3>
-        <button onClick={(e) => {
-          e.preventDefault();
-          props.dispatch(startRemoveTest(props.id));
-        }}
-        >X
-        </button>
-      </h3>
-      <Link to={`/edit/${props.id}`}>Edit</Link>
-    </div>
-  </div>
-);
+        <div className="show-for-desktop data-in-center">
+          <p className="list-item__data"> regular amount of data</p>
+        </div>
+        <div className="edit-remove-button-container">
+          <button
+            className="button--secondary"
+            onClick={(e) => {
+            e.preventDefault();
+            this.props.dispatch(startRemoveTest(this.props.id));
+          }}
+          >X
+          </button>
+          <Link
+            className="button"
+            to={`/edit/${this.props.id}`}>Edit</Link>
+        </div>
+      </div>
+    );
+  }
+}
 
 export default connect()(TestListItem);

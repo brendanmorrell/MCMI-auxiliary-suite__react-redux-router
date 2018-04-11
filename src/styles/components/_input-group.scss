@@ -12,6 +12,7 @@
   margin-bottom: $m-size;
   display: flex;
   flex-direction: row;
+  align-content: center;
   justify-content: space-between;
 
   @media(max-width: $desktop-breakpoint) {
@@ -19,5 +20,9 @@
   }
 }
 
-.input-group__row-item {
+
+.input-filter-combo {
+  display:flex;
+  flex-direction:row;
+  justify-content: space-between;
 }

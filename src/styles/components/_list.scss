@@ -16,6 +16,9 @@
 
 
 .list-item {
+  max-height: 20rem;
+  overflow-y: scroll;
+  overflow-x: scroll;
   align-items: center;
   border: 1px solid darken($very-light-grey, 7%);
   border-top: none;
@@ -30,6 +33,17 @@
     text-decoration: none;
     color: $dark-grey;
   }
+  > * {
+    min-width: 30%;
+  }
+  p {
+    padding: $m-size;
+    margin-right: $l-size;
+  }
+  h3 {
+    padding: $m-size;
+  }
+  padding: 10px;
 }
 
 .list-item--message {

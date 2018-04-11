@@ -18,3 +18,8 @@
   @extend .button;
   background-color: $medium-grey;
 }
+
+.button--secondary--full-width {
+  @extend .button--secondary;
+  width: 100%;
+}
