@@ -9,7 +9,7 @@ import Question from './Question';
 
 const generateQuestionList = () => {
   const arr = [];
-  for (let i = 0; i < 3; i += 1) {
+  for (let i = 0; i < 196; i += 1) {
     arr.push(null);
   }
   return arr;
@@ -144,8 +144,19 @@ class TestForm extends React.Component {
               isOutsideRange={() => false}
             />
           </div>
+          <div>
+            <textarea
+              className="text-area"
+              placeholder="Test notes (optional)"
+              value={this.state.note}
+              onChange={this.onNoteChange}
+            />
+          </div>
           <div className="form__content-container-two-items">
             <div>
+              <div className="t-f-header">
+                Current True False Values
+              </div>
               <TrueFalseSelector
                 trueValue={this.state.trueValue}
                 falseValue={this.state.falseValue}
@@ -155,7 +166,7 @@ class TestForm extends React.Component {
                 history={this.props.history}
               />
               <ol>
-                {this.state.questions.map((q, idx) => (
+                {this.state.questions.filter((x, idx) => idx < 49).map((q, idx) => (
                   <li>
                     <Question
                       number={idx + 1}
@@ -167,14 +178,50 @@ class TestForm extends React.Component {
                     />
                   </li>
                 ))}
+                <div>
+                  {this.state.questions.filter((x, idx) => idx >= 49 && idx < 98).map((q, idx) => (
+                    <li>
+                      <Question
+                        number={idx + 50}
+                        trueValue={this.state.trueValue}
+                        falseValue={this.state.falseValue}
+                        onHandleQuestionInput={this.onHandleQuestionInput}
+                        questionsArray={this.state.questions}
+                        answer={q}
+                      />
+                    </li>
+                  ))}
+                </div>
+                <div>
+                  {this.state.questions.filter((x, idx) => idx >= 98 && idx < 147).map((q, idx) => (
+                    <li>
+                      <Question
+                        number={idx + 99}
+                        trueValue={this.state.trueValue}
+                        falseValue={this.state.falseValue}
+                        onHandleQuestionInput={this.onHandleQuestionInput}
+                        questionsArray={this.state.questions}
+                        answer={q}
+                      />
+                    </li>
+                  ))}
+                </div>
+                <div>
+                  {this.state.questions.filter((x, idx) => idx >= 147).map((q, idx) => (
+                    <li>
+                      <Question
+                        number={idx + 148}
+                        trueValue={this.state.trueValue}
+                        falseValue={this.state.falseValue}
+                        onHandleQuestionInput={this.onHandleQuestionInput}
+                        questionsArray={this.state.questions}
+                        answer={q}
+                      />
+                    </li>
+                  ))}
+                </div>
               </ol>
             </div>
-            <textarea
-              className="text-area"
-              placeholder="Test notes (optional)"
-              value={this.state.note}
-              onChange={this.onNoteChange}
-            />
           </div>
           <div className="form__content-container-two-items">
             <button

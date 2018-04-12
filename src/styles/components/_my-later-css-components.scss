@@ -37,54 +37,72 @@ ol {
     counter-reset:item;
     margin:0;
     padding-left:0;
-}
-ol>li {
-    counter-increment:item;
-    list-style:none inside;
-    margin: 5px 0 ;
-    overflow: hidden;
-    font-size: 8px !important;
-    line-height: 1.3;
-}
-ol>li:before {
-    content:counter(item) ;
-    margin-right: 10px;
-    padding: 4px;
-    display: block;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    border-radius: 50%;
-    width: 32.5px;
-    background: white;
-    color: $dark-grey;
-    text-align: center;
-    font: 28px 'Lato', Helvetica, Arial, sans-serif;
-    font-weight: 100;
-    float: left;
+    li {
+        counter-increment:item;
+        list-style:none inside;
+        margin: 5px 0 ;
+        overflow: hidden;
+        font-size: 8px !important;
+        line-height: 1.3;
+      }
+    li:before {
+      padding-right: 4px;
+      padding-top: 10px;
+      content: counter(item);
+      width: 35px;
+      color: $dark-grey;
+      font: 20px 'Lato', Helvetica, Arial, sans-serif;
+      font-weight: 100;
+      float: left;
+      text-align: center;
+    }
 }
 
 
-.question-flex {
+
+.no-padding {
+  padding: 0;
+}
+.t-f-header {
+  @extend .list-header;
+  font-weight: 300;
+  text-align: center;
 
 }
-
-
 .t-f-button {
-  border-radius: 1.5em;
+  font-weight: 300;
   text-decoration: none;
   outline: none;
-  border: none;
   height: 3em;
-  width: 5em;
-  background-color: $medium-grey;
-  color:white;
+  width: 50%;
+  background-color: white;
+  color:$dark-grey;
   color: transparent;
   text-align: center;
+  border-bottom: 1px solid darken($very-light-grey, 7%);
+  border-top: 0px;
+  &:hover {
+    background-color: darken($very-light-grey, 7%);
+  }
+  &:active {
+    background-color: #BFBFBF;
+  }
+  &:focus {
+    background-color: #D4D4D4;
+  }
+}
+.left-tf-input {
+  border-left: 1px solid darken($very-light-grey, 7%);
+  border-right: 1px solid darken($very-light-grey, 7%);
+}
+.right-tf-input {
+  border-right: 1px solid darken($very-light-grey, 7%);
+  border-left: 0px;
 }
 
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: white;
-    opacity: 1; /* Firefox */
+::placeholder {
+    color: $dark-grey;
+    opacity: 1;
 }
 
 
