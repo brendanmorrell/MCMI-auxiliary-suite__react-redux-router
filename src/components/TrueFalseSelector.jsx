@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+// import FloatingActionButton from 'material-ui/FloatingActionButton';
+
 import { startSetTrue, startSetFalse } from '../actions/trueFalseValues';
+
 
 class TrueFalseSelector extends React.Component {
   constructor(props) {
@@ -60,13 +63,15 @@ class TrueFalseSelector extends React.Component {
     return (
       <div>
         <input
+          className="t-f-button"
           placeholder={placeholderTextTrue}
           onChange={e => this.handleChangeTrueValue(e)}
           value={this.state.emptyValue}
         />
         <input
+          className="t-f-button"
           placeholder={placeholderTextFalse}
-          onChange={this.handleChangeFalseValue}
+          onChange={e => this.handleChangeFalseValue(e)}
           value={this.state.emptyValue}
         />
       </div>

@@ -12,7 +12,7 @@ const TestList = ({ tests }) => (
       <div>Examinee</div>
     </div>
     <div className="list-body">
-      <FlipMove duration={750} easing="ease-out">
+      <FlipMove duration={550} easing="ease-in-out">
         {
           tests.length === 0 ? (
             <div className="list-item list-item--message">

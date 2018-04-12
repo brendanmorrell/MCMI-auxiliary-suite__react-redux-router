@@ -126,23 +126,24 @@ class TestForm extends React.Component {
         >
           {this.state.nameError && <p className="form__error">{this.state.nameError}</p>}
           {this.state.qError && <p className="form__error">{this.state.qError}</p>}
-
-          <input
-            className="text-input"
-            type="text"
-            placeholder="Name"
-            autoFocus// eslint-disable-line
-            value={this.state.name}
-            onChange={this.onNameChange}
-          />
-          <SingleDatePicker
-            date={this.state.scoreDate}
-            onDateChange={this.onDateChange}
-            focused={this.state.calendarFocused}
-            onFocusChange={this.onFocusChange}
-            numberOfMonths={1}
-            isOutsideRange={() => false}
-          />
+          <div className="top-two-inputs-edit-page">
+            <input
+              className="text-input"
+              type="text"
+              placeholder="Name"
+              autoFocus// eslint-disable-line
+              value={this.state.name}
+              onChange={this.onNameChange}
+            />
+            <SingleDatePicker
+              date={this.state.scoreDate}
+              onDateChange={this.onDateChange}
+              focused={this.state.calendarFocused}
+              onFocusChange={this.onFocusChange}
+              numberOfMonths={1}
+              isOutsideRange={() => false}
+            />
+          </div>
           <div className="form__content-container-two-items">
             <div>
               <TrueFalseSelector

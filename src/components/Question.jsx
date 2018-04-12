@@ -15,6 +15,32 @@ export default class Question extends React.Component {
   componentWillReceiveProps(nextProps) {
     this.setState({ answer: nextProps.answer });
   }
+  onBlur = () => {
+    this.setState({ focused: false });
+  }
+  onFocus = () => {
+    this.setState({ focused: true });
+  }
+  returnLabelValue = () => {
+    if (this.state.answer === null && !this.state.focused) {
+      return '________';
+    }
+    if (this.state.focused) {
+      setTimeout(() => {
+        this.setState()
+      }, 500);
+      return '\xa0\xa0\xa0\xa0\xa0\xa0__\xa0\xa0\xa0\xa0\xa0\xa0';
+    }
+    return this.state.answer === this.props.trueValue ? `true \xa0(${this.state.answer})` : `false (${this.state.answer})`;
+  }
+  handleClickRemove = (e) => {
+    e.preventDefault();
+    this.setState(() => ({ answer: '' }));
+    this.props.onHandleQuestionInput('', this.props.number);
+  }
+  handleClickFocused = () => {
+    this.setState({ focused: true });
+  }
   handleInput = (e) => {
     if (e.keyCode === 8) {
       this.props.onHandleQuestionInput('', this.props.number);
@@ -35,32 +61,6 @@ export default class Question extends React.Component {
     }
     return undefined;
   }
-  handleClickRemove = (e) => {
-    e.preventDefault();
-    this.setState(() => ({ answer: '' }));
-    this.props.onHandleQuestionInput('', this.props.number);
-  }
-  handleClickFocused = () => {
-    this.setState({ focused: true });
-  }
-  returnLabelValue = () => {
-    if (this.state.answer === null && !this.state.focused) {
-      return '________';
-    }
-    if (this.state.focused) {
-      setTimeout(() => {
-        this.setState()
-      }, 500);
-      return '\xa0\xa0\xa0\xa0\xa0\xa0__\xa0\xa0\xa0\xa0\xa0\xa0';
-    }
-    return this.state.answer === this.props.trueValue ? `true \xa0(${this.state.answer})` : `false (${this.state.answer})`;
-  }
-  onBlur = () => {
-    this.setState({ focused: false });
-  }
-  onFocus = () => {
-    this.setState({ focused: true });
-  }
   returnBackgroundColor = () => {
     if (this.state.focused) {
       return 'gainsboro';
@@ -69,7 +69,7 @@ export default class Question extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="div-around-questions">
         <RaisedButton
           onFocus={this.onFocus}
           backgroundColor={this.returnBackgroundColor()}
@@ -80,7 +80,12 @@ export default class Question extends React.Component {
           primary={this.state.answer === this.props.trueValue && !this.state.focused}
           secondary={this.state.answer === this.props.falseValue && !this.state.focused}
         />
-        <button onClick={e => this.handleClickRemove(e)}>X</button>
+        <button
+          className="button_clear--small"
+          onClick={e => this.handleClickRemove(e)}
+        >
+          X
+        </button>
       </div>
     );
   }

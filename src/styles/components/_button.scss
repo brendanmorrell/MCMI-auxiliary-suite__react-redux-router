@@ -1,5 +1,5 @@
 .button {
-  background-color: $bright-red;
+  background-color: $bright-red-dark;
   border: none;
   color: white;
   display: inline-block;
@@ -8,18 +8,45 @@
   line-height: 1;
   padding: $s-size;
   text-decoration: none;
+  &:hover {
+    background-color: $bright-red;
+  }
 }
 
 .button--link {
   background: none;
+  &:hover {
+    background-color: $bright-red-dark;
+  }
 }
 
 .button--secondary {
   @extend .button;
-  background-color: $medium-grey;
+  background-color: $dark-grey;
+  &:hover {
+    background-color: $medium-grey;
+  }
 }
 
 .button--secondary--full-width {
   @extend .button--secondary;
   width: 100%;
+}
+
+.button_clear--small {
+  border: none;
+  color: white;
+  display: inline-block;
+  text-decoration: none;
+  background-color: $dark-grey;
+  &:hover {
+    background-color: $medium-grey;
+  }
+}
+
+.div-around-questions {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  margin-top: 3px;
 }

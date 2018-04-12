@@ -35,7 +35,7 @@ class TestListItem extends React.Component {
           </button>
           <Link
             className="button"
-            to={`/edit/${this.props.id}`}>Edit</Link>
+            to={`/edit/${this.props.id}`}><span className="override-color">Edit</span></Link>
         </div>
       </div>
     );

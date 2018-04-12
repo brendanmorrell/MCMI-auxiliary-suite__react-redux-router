@@ -6,8 +6,12 @@ import TestListSummary from './TestListSummary';
 
 export default () => (
   <div>
-    <TestListSummary total={12} />
-    <TestListFilters />
-    <TestList />
+    <div className="site-background">
+      <div>
+        <TestListSummary total={12} />
+      </div>
+      <TestListFilters />
+      <TestList />
+    </div>
   </div>
 );

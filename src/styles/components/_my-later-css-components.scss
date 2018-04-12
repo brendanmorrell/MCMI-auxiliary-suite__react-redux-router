@@ -14,3 +14,80 @@
     width: 20%;
   }
 }
+
+
+.site-background {
+  background-image: url("/images/bg-red.png");
+  background-size: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.override-color {
+  color: white;
+}
+
+.link-focused {
+  color: $medium-grey;
+}
+
+
+
+ol {
+    counter-reset:item;
+    margin:0;
+    padding-left:0;
+}
+ol>li {
+    counter-increment:item;
+    list-style:none inside;
+    margin: 5px 0 ;
+    overflow: hidden;
+    font-size: 8px !important;
+    line-height: 1.3;
+}
+ol>li:before {
+    content:counter(item) ;
+    margin-right: 10px;
+    padding: 4px;
+    display: block;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    width: 32.5px;
+    background: white;
+    color: $dark-grey;
+    text-align: center;
+    font: 28px 'Lato', Helvetica, Arial, sans-serif;
+    font-weight: 100;
+    float: left;
+}
+
+
+.question-flex {
+
+}
+
+
+.t-f-button {
+  border-radius: 1.5em;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  height: 3em;
+  width: 5em;
+  background-color: $medium-grey;
+  color:white;
+  color: transparent;
+  text-align: center;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: 1; /* Firefox */
+}
+
+
+textarea {
+    resize: none;
+}

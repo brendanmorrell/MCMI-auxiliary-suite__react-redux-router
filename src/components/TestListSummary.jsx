@@ -20,7 +20,7 @@ export const TestListSummary = (props) => {
                   <strong> {props.testsCount}</strong> total {countWord}
                 </span>
               :
-                <span> all tests</span>}
+                <span> all tests ({props.testsCount})</span>}
             </div>
           :
             <div>

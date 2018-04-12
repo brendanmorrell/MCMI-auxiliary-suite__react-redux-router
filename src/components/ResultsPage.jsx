@@ -43,7 +43,7 @@ class ResultsPage extends React.Component {
       { x: '13', y: this.state.oneThree },
     ];
     return (
-      <div>
+      <div className="site-background">
         <div className="page-header">
           <div className="content-container">
             <h1 className="page-header__title">
