@@ -86,7 +86,10 @@ export default class Question extends React.Component {
         >
           X
         </button>
-        {this.props.isUnansweredOnSubmit && <p>this question was not answered</p>}
+        <div>
+          {this.props.isUnansweredOnSubmit &&
+            <div className="error-pointer" />}
+        </div>
       </div>
     );
   }
