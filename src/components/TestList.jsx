@@ -6,16 +6,16 @@ import FlipMove from 'react-flip-move';
 import TestListItem from './TestListItem';
 import selectTests from '../selectors/tests';
 
-const TestList = ({ tests }) => (
+const TestList = props => (
   <div className="content-container">
     <div className="list-header">
       <div>Examinee</div>
     </div>
     <div className="list-body">
       <FlipMove duration={550} easing="ease-in-out">
-        {tests.map(test => <TestListItem key={test.id} {...test} />)}
+        {props.tests.map(test => <TestListItem history={props.history} key={test.id} {...test} />)}
         <div className="list-item list-item--message">
-          {tests.length === 0 ? <span className="center">No tests</span> : <span className="center">© 2018</span>}
+          {props.tests.length === 0 ? <span className="center">No tests</span> : <span className="center">© 2018</span>}
         </div>
       </FlipMove>
     </div>

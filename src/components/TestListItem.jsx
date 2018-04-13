@@ -11,19 +11,30 @@ class TestListItem extends React.Component {
     super();
     this.state = {
       modalIsOpen: false,
+      clickedItemIsButton: false,
     };
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
+  onClickDiv = () => {
+    this.setState(prevState => ({}), () => {
+      if (!this.state.clickedItemIsButton) {
+        return this.props.history.push(`/results/${this.props.id}`);
+      }
+      return undefined;
+    });
+  }
   openModal = (e) => {
-    this.setState({ modalIsOpen: true });
+    this.setState({ modalIsOpen: true, clickedItemIsButton: true });
   }
   afterOpenModal = () => {
   }
   closeModal = () => {
-    console.log('closeModal clicked');
     this.setState({ modalIsOpen: false });
+    setTimeout(() => {
+      return this.setState({ clickedItemIsButton: false });
+    });
   }
   deleteTest = () => {
     this.setState({ modalIsOpen: false });
@@ -31,7 +42,10 @@ class TestListItem extends React.Component {
   }
   render() {
     return (
-      <div className="list-item">
+      <div// eslint-disable-line
+        className="list-item"
+        onClick={this.onClickDiv}
+      >
         <div>
           <Link to={`/results/${this.props.id}`}>
             <div className="list-item__main-data">
@@ -45,7 +59,7 @@ class TestListItem extends React.Component {
         </div>
         <div className="edit-remove-button-container">
           <button
-            className="button--secondary"
+            className="button--secondary flat"
             onClick={e => this.openModal(e)}
           >X
           </button>
@@ -80,7 +94,7 @@ class TestListItem extends React.Component {
             </Modal>
           </div>
           <Link
-            className="button"
+            className="button flat"
             to={`/edit/${this.props.id}`}
           >
             <span className="override-color">Edit</span>

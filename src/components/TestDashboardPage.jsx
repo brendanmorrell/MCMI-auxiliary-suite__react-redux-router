@@ -4,14 +4,16 @@ import TestList from './TestList';
 import TestListFilters from './TestListFilters';
 import TestListSummary from './TestListSummary';
 
-export default () => (
+export default props => (
   <div>
     <div className="site-background">
       <div>
         <TestListSummary total={12} />
       </div>
       <TestListFilters />
-      <TestList />
+      <TestList
+        history={props.history}
+      />
     </div>
   </div>
 );
