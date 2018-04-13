@@ -1,5 +1,7 @@
 .list-header {
   background: $very-light-grey;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
   border: 1px solid darken($very-light-grey, 7%);
   color: $dark-grey;
   display: flex;
@@ -46,20 +48,37 @@
   }
   padding: 10px;
 }
+.just-left-radius {
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-right: 0px;
+}
 
+.add-right-radius {
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
 .list-item--message {
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
   align-items: center;
   color: $medium-grey;
+  align-content: center;
   justify-content: center;
-  padding: $m-size;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-height: 30px;
   &:hover {
-    background: none;
+    background: white;
+  }
+  > p {
+    max-height: 1rem;
   }
 }
 
 .list-item__title {
   margin: 0;
-  word-break: break-all;
 }
 
 .list-item__subtitle {

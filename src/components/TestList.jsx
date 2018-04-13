@@ -13,15 +13,10 @@ const TestList = ({ tests }) => (
     </div>
     <div className="list-body">
       <FlipMove duration={550} easing="ease-in-out">
-        {
-          tests.length === 0 ? (
-            <div className="list-item list-item--message">
-              <span>No tests</span>
-            </div>
-          ) : (
-            tests.map(test => <TestListItem key={test.id} {...test} />)
-          )
-        }
+        {tests.map(test => <TestListItem key={test.id} {...test} />)}
+        <div className="list-item list-item--message">
+          {tests.length === 0 ? <span>No tests</span> : <span>© 2018</span>}
+        </div>
       </FlipMove>
     </div>
   </div>

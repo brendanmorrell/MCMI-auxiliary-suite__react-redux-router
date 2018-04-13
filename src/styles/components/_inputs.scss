@@ -1,6 +1,9 @@
 .text-input {
+  padding-left: $s-size;
   border: 1px solid #cacccd;
+  border-radius: 5px;
   height: 50px;
+  min-width: 106px;
   width:100%;
   font-size: $font-size-large;
   font-weight: $s-weight;
@@ -10,8 +13,16 @@
   @extend .text-input;
   -webkit-appearance: none;
   -webkit-border-radius: 0px;
+  min-width: 120px;
   &:hover {
-    background-color: darken($very-light-grey, 6);
+    background-color: $very-light-grey;
+  }
+  &:active {
+    background-color: darken($very-light-grey, 4%);
+    outline: none;
+  }
+  @media (max-width: $desktop-breakpoint) {
+    min-width: 40px;
   }
 }
 
@@ -29,13 +40,15 @@
   border-left: none;
   background-size: 100% 100%;
   margin-left: 0;
-  width: 70px;
+  width: 40px;
   height: 50px;
   &:hover {
-    background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) ), url('/images/arrow-down.png');
+    background: linear-gradient( rgba(200, 200, 200, 0.1), rgba(200, 200, 200, 0.1) ), url('/images/arrow-down.png');
     border:1px solid #cacccd;
     border-radius: 0;
     border-left: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     background-size: 100% 100%;
     margin-left: 0;
   }
@@ -48,13 +61,15 @@
   border-left: none;
   background-size: 100% 100%;
   margin-left: 0;
-  width: 70px;
+  width: 40px;
   height: 50px;
   &:hover {
-    background: linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) ), url('/images/arrow-up.png');
+    background: linear-gradient( rgba(200, 200, 200, 0.1), rgba(200, 200, 200, 0.1) ), url('/images/arrow-up.png');
     border:1px solid #cacccd;
     border-radius: 0;
     border-left: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
     background-size: 100% 100%;
     margin-left: 0;
   }

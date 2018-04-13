@@ -32,7 +32,7 @@ class TestListFilters extends React.Component {
       <div className="content-container">
         <div className="input-group__row">
           <input
-            className="text-input"
+            className="text-input just-left-radius"
             placeholder="Search tests"
             type="text"
             value={this.props.text}
@@ -47,7 +47,7 @@ class TestListFilters extends React.Component {
             >{this.props.sortBy === 'scoreDate' ? 'Date' : 'Name'}
             </button>
             <button
-              className={this.props.rvsFilter ? "filters-reversed input-filter-button" : "filters-normal input-filter-button"}
+              className={this.props.rvsFilter ? "filters-reversed input-filter-button add-right-radius" : "filters-normal input-filter-button add-right-radius"}
               onClick={() => {
                 this.props.dispatch(setRvsFilter());
               }}

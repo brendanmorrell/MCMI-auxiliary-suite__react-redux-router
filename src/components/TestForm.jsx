@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import autosize from 'autosize';
+
 import TrueFalseSelector from './TrueFalseSelector';
 
 import Question from './Question';
@@ -118,6 +120,7 @@ class TestForm extends React.Component {
     this.setState(() => ({ questions: convertQAnswersToNewTFValues }));
   }
   render() {
+    autosize(document.querySelectorAll('textarea'));
     return (
       <div>
         <form
@@ -128,7 +131,7 @@ class TestForm extends React.Component {
           {this.state.qError && <p className="form__error">{this.state.qError}</p>}
           <div className="top-two-inputs-edit-page">
             <input
-              className="text-input"
+              className="text-input just-left-radius"
               type="text"
               placeholder="Name"
               autoFocus// eslint-disable-line
@@ -144,7 +147,7 @@ class TestForm extends React.Component {
               isOutsideRange={() => false}
             />
           </div>
-          <div>
+          <div clasName="text-area-div">
             <textarea
               className="text-area"
               placeholder="Test notes (optional)"
@@ -165,24 +168,12 @@ class TestForm extends React.Component {
                 formCancelled={this.state.formCancelled}
                 history={this.props.history}
               />
-              <ol>
-                {this.state.questions.filter((x, idx) => idx < 49).map((q, idx) => (
-                  <li>
-                    <Question
-                      number={idx + 1}
-                      trueValue={this.state.trueValue}
-                      falseValue={this.state.falseValue}
-                      onHandleQuestionInput={this.onHandleQuestionInput}
-                      questionsArray={this.state.questions}
-                      answer={q}
-                    />
-                  </li>
-                ))}
-                <div>
-                  {this.state.questions.filter((x, idx) => idx >= 49 && idx < 98).map((q, idx) => (
+              <div className="form-middle">
+                <ol className="grid">
+                  {this.state.questions.map((q, idx) => (
                     <li>
                       <Question
-                        number={idx + 50}
+                        number={idx + 1}
                         trueValue={this.state.trueValue}
                         falseValue={this.state.falseValue}
                         onHandleQuestionInput={this.onHandleQuestionInput}
@@ -191,53 +182,29 @@ class TestForm extends React.Component {
                       />
                     </li>
                   ))}
-                </div>
-                <div>
-                  {this.state.questions.filter((x, idx) => idx >= 98 && idx < 147).map((q, idx) => (
-                    <li>
-                      <Question
-                        number={idx + 99}
-                        trueValue={this.state.trueValue}
-                        falseValue={this.state.falseValue}
-                        onHandleQuestionInput={this.onHandleQuestionInput}
-                        questionsArray={this.state.questions}
-                        answer={q}
-                      />
-                    </li>
-                  ))}
-                </div>
-                <div>
-                  {this.state.questions.filter((x, idx) => idx >= 147).map((q, idx) => (
-                    <li>
-                      <Question
-                        number={idx + 148}
-                        trueValue={this.state.trueValue}
-                        falseValue={this.state.falseValue}
-                        onHandleQuestionInput={this.onHandleQuestionInput}
-                        questionsArray={this.state.questions}
-                        answer={q}
-                      />
-                    </li>
-                  ))}
-                </div>
-              </ol>
+                </ol>
+              </div>
             </div>
           </div>
-          <div className="form__content-container-two-items">
+          <div className="form__content-container-two-items form-middle">
             <button
-              className="button"
+              className="button button-margin"
             >
               {this.props.editTestPage ? <span>Save Changes</span> : <span>Save New Test</span> }
             </button>
             <button
-              className="button--secondary"
+              className="button--secondary button-margin"
               onClick={this.handleCancel}
             >
-              {this.props.editTestPage ? <span>Cancel Changes</span> : <span>Cancel New Test</span> }
+              {this.props.editTestPage ?
+                <span>Cancel Changes</span> : <span>Cancel New Test</span> }
             </button>
           </div>
           {this.state.nameError && <span>{this.state.nameError}</span>}
           {this.state.qError && <p>{this.state.qError}</p>}
+          <div className="list-item list-item--message">
+             <span>© 2018</span>
+          </div>
         </form>
       </div>
     );
