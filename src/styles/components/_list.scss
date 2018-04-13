@@ -29,6 +29,9 @@
   justify-content: space-between;
   padding: $s-size;
   transition: background .3s ease;
+  h3 {
+    margin-bottom: $s-size;
+  }
   &:hover {
     background: $very-light-grey;
   }
@@ -43,10 +46,6 @@
     padding: $m-size;
     margin-right: $l-size;
   }
-  h3 {
-    padding: $m-size;
-  }
-  padding: 10px;
 }
 .just-left-radius {
   border-top-right-radius: 0px;
@@ -88,4 +87,13 @@
 
 .list-item__data {
 
+}
+
+
+.list-item__main-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: flex-end;
+  padding-left: $m-size;
 }

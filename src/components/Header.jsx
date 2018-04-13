@@ -30,7 +30,7 @@ class Header extends React.Component {
                 exact
                 to="/dashboard"
               >
-                <h1>
+                <h1 className="lightweight">
                   MCMI-IV
                 </h1>
               </Link>

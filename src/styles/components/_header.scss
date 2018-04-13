@@ -5,9 +5,7 @@
 .header__title {
   color: white;
   text-decoration: none;
-  h1: {
-    margin: 0;
-  }
+  font-weight: 300;
 }
 
 .header__content {
@@ -15,4 +13,9 @@
   display: flex;
   justify-content: space-between;
   padding: $s-size 0;
+}
+
+
+.lightweight {
+  font-weight: 300;
 }

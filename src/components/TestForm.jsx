@@ -203,7 +203,7 @@ class TestForm extends React.Component {
           {this.state.nameError && <span>{this.state.nameError}</span>}
           {this.state.qError && <p>{this.state.qError}</p>}
           <div className="list-item list-item--message">
-             <span>© 2018</span>
+             <span className="center">© 2018</span>
           </div>
         </form>
       </div>

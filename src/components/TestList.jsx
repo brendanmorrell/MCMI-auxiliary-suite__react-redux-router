@@ -15,7 +15,7 @@ const TestList = ({ tests }) => (
       <FlipMove duration={550} easing="ease-in-out">
         {tests.map(test => <TestListItem key={test.id} {...test} />)}
         <div className="list-item list-item--message">
-          {tests.length === 0 ? <span>No tests</span> : <span>© 2018</span>}
+          {tests.length === 0 ? <span className="center">No tests</span> : <span className="center">© 2018</span>}
         </div>
       </FlipMove>
     </div>
