@@ -30,6 +30,7 @@ class TestForm extends React.Component {
       calendarFocused: false,
       nameError: '',
       qError: '',
+      emptyQs: [],
       formCancelled: false,
     };
   }
@@ -67,17 +68,40 @@ class TestForm extends React.Component {
   }
   onSubmit = (e) => {
     e.preventDefault();
-
-    const allValuesTorF = this.state.questions.reduce((acc, x) => (
-      (x === this.state.trueValue || x === this.state.falseValue) ? acc && true : false), true);
-
-    if (allValuesTorF && this.state.name) {
+    const emptyQs = [];
+    const allValuesTorF = this.state.questions.reduce((acc, x, idx) => {
+      if (x !== this.state.trueValue && x !== this.state.falseValue) {
+        emptyQs.push(idx + 1);
+      }
+      return (x === this.state.trueValue || x === this.state.falseValue) ? acc && true : false;
+    }, true);
+    if (allValuesTorF && this.state.name.trim()) {
       return this.props.onSubmit({
-        name: this.state.name,
+        name: this.state.name.trim(),
         scoreDate: this.state.scoreDate.valueOf(),
         questions: this.state.questions.map(x => x === this.state.trueValue),
         note: this.state.note,
       });
+    }
+    if (!allValuesTorF) {
+      let message;
+      if (emptyQs.length === 1) {
+        message = `Please fill in question ${emptyQs[0].toString()}`;
+      } else if (emptyQs.length > 5) {
+        message = 'Please fill in all questions';
+      } else {
+        const numberString = emptyQs.map((x, idx) => {
+          if (idx < emptyQs.length - 1) {
+            return `${x.toString()}, `;
+          }
+          return ` and ${x.toString()}.`;
+        }).join('');
+        message = `Please fill in questions ${numberString}`;
+      }
+      this.setState(() => ({ qError: message, emptyQs }));
+    }
+    if (!this.state.name.trim()) {
+      this.setState(() => ({ name: '', nameError: 'Please fill out \'name\' field' }));
     }
     return undefined;
   };
@@ -86,6 +110,29 @@ class TestForm extends React.Component {
     if (!qAns) {
       questions[qNum - 1] = null;
     } else {
+      if (this.state.emptyQs.length > 0) {
+        const newEmptyQs = this.state.emptyQs.filter(x => x !== qNum);
+        this.setState(() => ({ emptyQs: newEmptyQs }), () => {
+          let message;
+          if (this.state.emptyQs.length === 1) {
+            message = `Please fill in question ${this.state.emptyQs[0].toString()}`;
+          } else if (this.state.emptyQs.length > 5) {
+            message = 'Please fill in all questions';
+          } else {
+            const numberString = this.state.emptyQs.map((x, idx) => {
+              if (idx < this.state.emptyQs.length - 1) {
+                return `${x.toString()}, `;
+              }
+              return ` and ${x.toString()}.`;
+            }).join('');
+            message = `Please fill in questions ${numberString}`;
+            if (!numberString) {
+              message = '';
+            }
+          }
+          this.setState(() => ({ qError: message }));
+        });
+      }
       questions[qNum - 1] = (qAns === this.state.trueValue) ?
         this.state.trueValue : this.state.falseValue;
       this.handleJumpNextInput(e);
@@ -127,8 +174,6 @@ class TestForm extends React.Component {
           className="form"
           onSubmit={this.onSubmit}
         >
-          {this.state.nameError && <p className="form__error">{this.state.nameError}</p>}
-          {this.state.qError && <p className="form__error">{this.state.qError}</p>}
           <div className="top-two-inputs-edit-page">
             <input
               className="text-input just-left-radius"
@@ -179,6 +224,7 @@ class TestForm extends React.Component {
                         onHandleQuestionInput={this.onHandleQuestionInput}
                         questionsArray={this.state.questions}
                         answer={q}
+                        isUnansweredOnSubmit={this.state.emptyQs.find(x => x === idx + 1)}
                       />
                     </li>
                   ))}
@@ -186,6 +232,14 @@ class TestForm extends React.Component {
               </div>
             </div>
           </div>
+          {this.state.nameError &&
+            <div className="form-middle">
+              <span className="form__error">{this.state.nameError}</span>
+            </div>}
+          {this.state.qError &&
+            <div className="form-middle">
+              <span className="form__error">{this.state.qError}</span>
+            </div>}
           <div className="form__content-container-two-items form-middle">
             <button
               className="button button-margin"
@@ -200,8 +254,6 @@ class TestForm extends React.Component {
                 <span>Cancel Changes</span> : <span>Cancel New Test</span> }
             </button>
           </div>
-          {this.state.nameError && <span>{this.state.nameError}</span>}
-          {this.state.qError && <p>{this.state.qError}</p>}
           <div className="list-item list-item--message">
              <span className="center">© 2018</span>
           </div>

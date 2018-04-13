@@ -86,6 +86,7 @@ export default class Question extends React.Component {
         >
           X
         </button>
+        {this.props.isUnansweredOnSubmit && <p>this question was not answered</p>}
       </div>
     );
   }
