@@ -229,17 +229,20 @@ class TestForm extends React.Component {
                     </li>
                   ))}
                 </ol>
+
+                {(this.state.nameError || this.state.qError) &&
+                  <div className="error-message-container">
+                    {this.state.nameError &&
+                      <span className="form__error">{this.state.nameError}</span>
+                    }
+                    {this.state.qError &&
+                      <span className="form__error">{this.state.qError}</span>
+                    }
+                  </div>
+                }
               </div>
             </div>
           </div>
-          {this.state.nameError &&
-            <div className="form-middle">
-              <span className="form__error">{this.state.nameError}</span>
-            </div>}
-          {this.state.qError &&
-            <div className="form-middle">
-              <span className="form__error">{this.state.qError}</span>
-            </div>}
           <div className="form__content-container-two-items form-middle">
             <button
               className="button button-margin"

@@ -147,3 +147,20 @@ li {
   position: absolute;
   z-index: 1;
 }
+
+
+.error-message-container {
+  padding-top: $m-size;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.form__error {
+  padding-bottom: $s-size * .5;
+  font-style: italic;
+  border-bottom: 1px solid pink;
+  color: $medium-grey;
+}
