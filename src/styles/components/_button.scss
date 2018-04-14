@@ -1,6 +1,5 @@
 .button {
   box-shadow: rgba(0, 0, 0, 0.12) -1px 3px 6px, rgba(0, 0, 0, 0.12) -1px 3px 4px;
-  background-color: $bright-red-dark;
   border-radius: 4px;
   border: none;
   color: white;
@@ -10,8 +9,12 @@
   line-height: 1;
   padding: $s-size;
   text-decoration: none;
+  background-color: $peach;
   &:hover {
-    background-color: $bright-red;
+    background-color: darken($peach, 3%);
+  }
+  &:active {
+    background-color: darken($peach, 7%);
   }
 }
 
@@ -19,16 +22,19 @@
   box-shadow: 0px 0px 0px;
   background: none;
   &:hover {
-    background-color: $bright-red-dark;
+    background-color: $light-red;
   }
 }
 
 .button--secondary {
   box-shadow: rgba(0, 0, 0, 0.12) -1px 3px 6px, rgba(0, 0, 0, 0.12) -1px 3px 4px;
   @extend .button;
-  background-color: $dark-grey;
+  background-color: $yellow;
   &:hover {
-    background-color: $medium-grey;
+    background-color: darken($yellow, 3%);
+  }
+  &:active {
+    background-color: darken($yellow, 7%);
   }
 }
 
