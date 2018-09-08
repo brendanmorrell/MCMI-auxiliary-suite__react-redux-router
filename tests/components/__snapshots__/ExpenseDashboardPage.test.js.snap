@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render the ExpenseListFilters and ExpenseList components 1`] = `
+<div>
+  <Connect(ExpensesSummary) />
+  <Connect(ExpenseListFilters) />
+  <Connect(ExpenseList) />
+</div>
+`;

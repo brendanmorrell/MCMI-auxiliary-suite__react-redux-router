@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should display an h2 with an error 404 message 1`] = `
+<div>
+  <h2>
+    Error 404! Page not found!
+  </h2>
+</div>
+`;

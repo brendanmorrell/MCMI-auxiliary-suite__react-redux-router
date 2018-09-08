@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should render Header correctly 1`] = `
+<header
+  className="header"
+>
+  <div
+    className="content-container"
+  >
+    <div
+      className="header__content"
+    >
+      <NavLink
+        activeClassName="active"
+        ariaCurrent="true"
+        className="header__title"
+        exact={true}
+        to="/dashboard"
+      >
+        <h1>
+          Coinpurse
+        </h1>
+      </NavLink>
+      <button
+        className="button button--link"
+        onClick={[Function]}
+      >
+         Logout
+      </button>
+    </div>
+  </div>
+</header>
+`;

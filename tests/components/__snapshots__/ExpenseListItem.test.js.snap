@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`It should render the 'Rent' expense item which is the 2nd item in the expenses array 1`] = `
+<Link
+  className="list-item"
+  replace={false}
+  to="/edit/2"
+>
+  <div>
+    <h3
+      className="list-item__title"
+    >
+      REnt
+    </h3>
+    <span
+      className="list-item__subtitle"
+    >
+      December 29th
+    </span>
+  </div>
+  <h3
+    className="list-item__data"
+  >
+    $1,095.00
+  </h3>
+</Link>
+`;
