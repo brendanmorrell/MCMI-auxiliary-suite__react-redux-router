@@ -1,8 +1,7 @@
-const getScore = (resultsParam, {
+const getScore = (results, {
   prototypal, neurotypal, isInconsistency, pairs,
 }) => {
   // change results from zero-indexed to match Q#
-  let results = { ...resultsParam };
   results = [null].concat(results);
   if (isInconsistency) {
     const score = pairs.reduce(
@@ -28,7 +27,7 @@ const getScore = (resultsParam, {
     prototypal,
     neurotypal: { True, False },
     score: {
-      base: protoScore + (TrueScore - FalseScore),
+      base: protoScore + TrueScore - FalseScore,
       disclosure: 0,
       ACC: 0,
       final: null,
@@ -37,9 +36,7 @@ const getScore = (resultsParam, {
 };
 const calculateScores = (results, scaleObj) => {
   const scoredScales = {};
-  Object.keys(scaleObj).forEach((scale) => {
-    scoredScales[scale] = getScore(results, scaleObj[scale]);
-  });
+  Object.keys(scaleObj).forEach(scale => (scoredScales[scale] = getScore(results, scaleObj[scale])));
   return scoredScales;
 };
 const disclosureAdjustment = (scores) => {
@@ -97,45 +94,44 @@ const disclosureAdjustment = (scores) => {
     { base: 114, '18B': -10, SPP: -5 },
   ];
 
-  const { base } = scores.disclosure.score;
+  const { base: score } = scores.disclosure.score;
   let baseAdjustmentVal;
-  if (base > 6 && base < 115) {
-    for (let i = 0; i < baseAdjustmentValsArr.length; i += 1) {
-      if (base < 7) break;
+  if (score > 6 && score < 115) {
+    for (let i = 0; i < baseAdjustmentValsArr.length; i++) {
+      if (score < 7) break;
       const vals = baseAdjustmentValsArr[i];
-      if (base <= vals.base) {
+      if (score <= vals.base) {
         baseAdjustmentVal = vals;
         break;
       }
     }
-    Object.keys(scores).forEach((score) => {
-      if (is18B[score]) {
-        result[score] = {
-          ...scores[score],
+    for (key in scores) {
+      if (is18B[key]) {
+        result[key] = {
+          ...scores[key],
           score: {
-            ...scores[score].score,
+            ...scores[key].score,
             disclosure: baseAdjustmentVal['18B'],
           },
         };
-      } else if (isSPP[score]) {
-        result[score] = {
-          ...scores[score],
+      } else if (isSPP[key]) {
+        result[key] = {
+          ...scores[key],
           score: {
-            ...scores[score].score,
+            ...scores[key].score,
             disclosure: baseAdjustmentVal.SPP,
           },
         };
       } else {
-        result[score] = scores[score];
+        result[key] = scores[key];
       }
-    });
+    }
   } else {
     result = { ...scores };
   }
   return result;
 };
-const baseRateScaleAdjustment = (scoresParam) => {
-  const scores = { ...scoresParam };
+const baseRateScaleAdjustment = (scores) => {
   const anxietyScore =
     scores.melancholic.score.base + scores.masochistic.score.base + scores.borderline.score.base;
   const depressiveScore = scores.avoidant.score.base + scores.schizotypal.score.base;
@@ -156,7 +152,7 @@ const baseRateScaleAdjustment = (scoresParam) => {
   ];
   if (ACCScore) {
     const adjustment = { anxiety: 0, depressive: 0 };
-    for (let i = 0; i < adjustments.length; i += 1) {
+    for (let i = 0; i < adjustments.length; i++) {
       const elt = adjustments[i];
       if (elt.accValue >= ACCScore) {
         adjustment.anxiety = elt.anxiety;
@@ -175,16 +171,16 @@ const baseRateScaleAdjustment = (scoresParam) => {
 };
 const getFinalScores = (scores) => {
   const result = {};
-  Object.keys(scores).forEach((score) => {
-    const elt = scores[score];
+  for (const key in scores) {
+    const elt = scores[key];
     const final = elt.score.base + elt.score.disclosure + elt.score.ACC;
-    result[score] = { ...elt, score: { ...elt.score, final } };
-  });
+    result[key] = { ...elt, score: { ...elt.score, final } };
+    const j = { ...elt, score: { ...elt.score, final } };
+  }
   return result;
 };
 
-const invalidityChecks = (scoresParam) => {
-  const scores = { ...scoresParam };
+const invalidityChecks = (scores) => {
   const oneThrough8B = [
     scores.schizoid.score.base,
     scores.avoidant.score.base,
@@ -209,6 +205,248 @@ const invalidityChecks = (scoresParam) => {
   if (allOneThrough8BUnder60) scores.invalidTest.noClearPersonalityPattern = true;
   return scores;
 };
+const allTrue = [
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+];
 const scoringScale = {
   schizoid: {
     prototypal: [6, 15, 43, 90, 119, 139, 149, 180],
@@ -525,6 +763,13 @@ const scoringScale = {
     },
   },
 };
+
+const initialCalculatedScores = calculateScores(allTrue, scoringScale);
+const disclosureAdjustmentCalculatedScores = disclosureAdjustment(initialCalculatedScores);
+const baseRateAdjustmentCalculatedScores = baseRateScaleAdjustment(disclosureAdjustmentCalculatedScores);
+const finalScore = getFinalScores(baseRateAdjustmentCalculatedScores);
+const finalScoreWithInvalidity = invalidityChecks(finalScore);
+console.log(finalScoreWithInvalidity);
 // add possibility to score if up to 14 are missing or double marked (unscorable)
 export default scores =>
   invalidityChecks(getFinalScores(baseRateScaleAdjustment(disclosureAdjustment(calculateScores(scores, scoringScale)))));

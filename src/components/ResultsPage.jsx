@@ -45,6 +45,7 @@ class ResultsPage extends React.Component {
     //   { x: '13', y: this.state.oneThree },
     // ];
     const fullResults = scoreTest(this.props.test.questions);
+    console.log('​ResultsPage -> render -> fullResults', fullResults);
     const limitedResults = Object.keys(fullResults).map(scale =>
       (fullResults[scale].score ? (
         <div>{`${scale} : ${fullResults[scale].score.final}`} </div>
@@ -54,6 +55,7 @@ class ResultsPage extends React.Component {
           <ul>{Object.keys(fullResults[scale]).map(x => <div>{`* ${x}`}</div>)}</ul>
         </div>
       )));
+    console.log('​ResultsPage -> render -> limitedResults', limitedResults);
     return (
       <div className="site-background">
         <div className="page-header">
