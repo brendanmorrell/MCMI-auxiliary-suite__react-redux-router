@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { SingleDatePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import autosize from 'autosize';
+import Modal from 'react-modal';
 
 import TrueFalseSelector from './TrueFalseSelector';
 
@@ -11,7 +12,7 @@ import Question from './Question';
 
 const generateQuestionList = () => {
   const arr = [];
-  for (let i = 0; i < 196; i += 1) {
+  for (let i = 0; i < 195; i += 1) {
     arr.push(null);
   }
   return arr;
@@ -32,6 +33,7 @@ class TestForm extends React.Component {
       qError: '',
       emptyQs: [],
       formCancelled: false,
+      modalIsOpen: false,
     };
   }
   componentWillMount() {
@@ -49,23 +51,23 @@ class TestForm extends React.Component {
   onChangeTrue = (trueValue) => {
     const prevTrue = this.state.trueValue;
     this.setState(() => ({ trueValue }), () => this.convertQAnswersToNewTFValues(prevTrue));
-  }
+  };
   onChangeFalse = (falseValue) => {
     const prevTrue = this.state.trueValue;
     this.setState(() => ({ falseValue }), () => this.convertQAnswersToNewTFValues(prevTrue));
-  }
+  };
   onNameChange = (e) => {
     const name = e.target.value;
     this.setState(() => ({ name, nameError: '' }));
-  }
+  };
   onDateChange = (scoreDate) => {
     if (scoreDate) {
       this.setState(() => ({ scoreDate }));
     }
-  }
+  };
   onFocusChange = ({ focused }) => {
     this.setState(() => ({ calendarFocused: focused }));
-  }
+  };
   onSubmit = (e) => {
     e.preventDefault();
     const emptyQs = [];
@@ -73,7 +75,7 @@ class TestForm extends React.Component {
       if (x !== this.state.trueValue && x !== this.state.falseValue) {
         emptyQs.push(idx + 1);
       }
-      return (x === this.state.trueValue || x === this.state.falseValue) ? acc && true : false;
+      return x === this.state.trueValue || x === this.state.falseValue ? acc && true : false;
     }, true);
     if (allValuesTorF && this.state.name.trim()) {
       return this.props.onSubmit({
@@ -83,25 +85,26 @@ class TestForm extends React.Component {
         note: this.state.note,
       });
     }
-    if (!allValuesTorF) {
-      let message;
-      if (emptyQs.length === 1) {
-        message = `Please fill in question ${emptyQs[0].toString()}`;
-      } else if (emptyQs.length > 5) {
-        message = 'Please fill in all questions';
-      } else {
-        const numberString = emptyQs.map((x, idx) => {
-          if (idx < emptyQs.length - 1) {
-            return `${x.toString()}, `;
-          }
-          return ` and ${x.toString()}.`;
-        }).join('');
-        message = `Please fill in questions ${numberString}`;
-      }
-      this.setState(() => ({ qError: message, emptyQs }));
-    }
-    if (!this.state.name.trim()) {
-      this.setState(() => ({ name: '', nameError: 'Please fill out \'name\' field' }));
+    if (!allValuesTorF || !this.state.name.trim()) {
+      // let message;
+      // if (emptyQs.length === 1) {
+      //   message = `Please fill in question ${emptyQs[0].toString()}`;
+      // } else if (emptyQs.length > 5) {
+      //   message = 'Please fill in all questions';
+      // } else {
+      //   const numberString = emptyQs.map((x, idx) => {
+      //     if (idx < emptyQs.length - 1) {
+      //       return `${x.toString()}, `;
+      //     }
+      //     return ` and ${x.toString()}.`;
+      //   }).join('');
+      //   message = `Please fill in questions ${numberString}`;
+      // }
+      this.setState({
+        /* qError: message, */ emptyQs,
+        name: this.state.name.trim(),
+        modalIsOpen: true,
+      });
     }
     return undefined;
   };
@@ -112,33 +115,38 @@ class TestForm extends React.Component {
     } else {
       if (this.state.emptyQs.length > 0) {
         const newEmptyQs = this.state.emptyQs.filter(x => x !== qNum);
-        this.setState(() => ({ emptyQs: newEmptyQs }), () => {
-          let message;
-          if (this.state.emptyQs.length === 1) {
-            message = `Please fill in question ${this.state.emptyQs[0].toString()}`;
-          } else if (this.state.emptyQs.length > 5) {
-            message = 'Please fill in all questions';
-          } else {
-            const numberString = this.state.emptyQs.map((x, idx) => {
-              if (idx < this.state.emptyQs.length - 1) {
-                return `${x.toString()}, `;
+        this.setState(
+          () => ({ emptyQs: newEmptyQs }),
+          () => {
+            let message;
+            if (this.state.emptyQs.length === 1) {
+              message = `Please fill in question ${this.state.emptyQs[0].toString()}`;
+            } else if (this.state.emptyQs.length > 5) {
+              message = 'Please fill in all questions';
+            } else {
+              const numberString = this.state.emptyQs
+                .map((x, idx) => {
+                  if (idx < this.state.emptyQs.length - 1) {
+                    return `${x.toString()}, `;
+                  }
+                  return ` and ${x.toString()}.`;
+                })
+                .join('');
+              message = `Please fill in questions ${numberString}`;
+              if (!numberString) {
+                message = '';
               }
-              return ` and ${x.toString()}.`;
-            }).join('');
-            message = `Please fill in questions ${numberString}`;
-            if (!numberString) {
-              message = '';
             }
-          }
-          this.setState(() => ({ qError: message }));
-        });
+            this.setState(() => ({ qError: message }));
+          },
+        );
       }
-      questions[qNum - 1] = (qAns === this.state.trueValue) ?
-        this.state.trueValue : this.state.falseValue;
+      questions[qNum - 1] =
+        qAns === this.state.trueValue ? this.state.trueValue : this.state.falseValue;
       this.handleJumpNextInput(e);
     }
     this.setState(() => ({ questions }));
-  }
+  };
   onNoteChange = (e) => {
     const note = e.target.value;
     this.setState(() => ({ note }));
@@ -146,14 +154,14 @@ class TestForm extends React.Component {
   handleCancel = (e) => {
     e.preventDefault();
     this.setState(() => ({ formCancelled: true }));
-  }
+  };
   handleJumpNextInput = (e) => {
     const { form } = e.target;
     const index = Array.prototype.indexOf.call(form, e.target);
     if (form.elements[index + 2]) {
       form.elements[index + 2].focus();
     }
-  }
+  };
   convertQAnswersToNewTFValues = (prevTrue) => {
     const convertQAnswersToNewTFValues = this.state.questions.slice().map((q) => {
       if (q !== null) {
@@ -165,21 +173,27 @@ class TestForm extends React.Component {
       return null;
     });
     this.setState(() => ({ questions: convertQAnswersToNewTFValues }));
-  }
+  };
+  openModal = (e) => {
+    this.setState({ modalIsOpen: true, clickedItemIsButton: true });
+  };
+  afterOpenModal = () => {};
+  closeModal = () => {
+    this.setState({ modalIsOpen: false });
+    setTimeout(() => this.setState({ clickedItemIsButton: false }));
+  };
   render() {
+    const { emptyQs } = this.state;
     autosize(document.querySelectorAll('textarea'));
     return (
       <div>
-        <form
-          className="form"
-          onSubmit={this.onSubmit}
-        >
+        <form className="form" onSubmit={this.onSubmit}>
           <div className="top-two-inputs-edit-page">
             <input
               className="text-input just-left-radius"
               type="text"
               placeholder="Name"
-              autoFocus// eslint-disable-line
+              autoFocus // eslint-disable-line
               value={this.state.name}
               onChange={this.onNameChange}
             />
@@ -202,9 +216,7 @@ class TestForm extends React.Component {
           </div>
           <div className="form__content-container-two-items">
             <div>
-              <div className="t-f-header">
-                Current True False Values
-              </div>
+              <div className="t-f-header">Current True False Values</div>
               <TrueFalseSelector
                 trueValue={this.state.trueValue}
                 falseValue={this.state.falseValue}
@@ -230,37 +242,69 @@ class TestForm extends React.Component {
                   ))}
                 </ol>
 
-                {(this.state.nameError || this.state.qError) &&
+                {(this.state.nameError || this.state.qError) && (
                   <div className="error-message-container">
-                    {this.state.nameError &&
+                    {this.state.nameError && (
                       <span className="form__error">{this.state.nameError}</span>
-                    }
-                    {this.state.qError &&
-                      <span className="form__error">{this.state.qError}</span>
-                    }
+                    )}
+                    {this.state.qError && <span className="form__error">{this.state.qError}</span>}
                   </div>
-                }
+                )}
               </div>
             </div>
           </div>
           <div className="form__content-container-two-items form-middle">
-            <button
-              className="button button-margin"
-            >
-              {this.props.editTestPage ? <span>Save Changes</span> : <span>Save New Test</span> }
+            <button className="button button-margin">
+              {this.props.editTestPage ? <span>Save Changes</span> : <span>Save New Test</span>}
             </button>
-            <button
-              className="button--secondary button-margin"
-              onClick={this.handleCancel}
-            >
-              {this.props.editTestPage ?
-                <span>Cancel Changes</span> : <span>Cancel New Test</span> }
+            <button className="button--secondary button-margin" onClick={this.handleCancel}>
+              {this.props.editTestPage ? <span>Cancel Changes</span> : <span>Cancel New Test</span>}
             </button>
           </div>
           <div className="list-item list-item--message">
-             <span className="center">© 2018</span>
+            <span className="center">© 2018</span>
           </div>
         </form>
+        <Modal
+          isOpen={this.state.modalIsOpen}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          contentLabel="Modal"
+        >
+          <div className="modal-div">
+            {!this.props.name && <h3 className="modal__title">The name field was left blank </h3>}
+            {!this.props.name && emptyQs.length && <h3 className="modal__title">&</h3>}
+            {emptyQs.length && (
+              <Fragment>
+                <h3 className="modal__title">The following Questions were left blank: </h3>
+                <p />
+                <p />
+                {emptyQs.map(q => <h3 className="list-item__title">{q}</h3>)}
+                <p />
+              </Fragment>
+            )}
+            <h3 className="modal__title">Are you sure you wish to submit?</h3>
+
+            <div className="button-group-modal">
+              <button
+                className="button button--secondary"
+                onClick={() =>
+                  this.props.onSubmit({
+                    name: this.state.name.trim(),
+                    scoreDate: this.state.scoreDate.valueOf(),
+                    questions: this.state.questions.map(x => x === this.state.trueValue),
+                    note: this.state.note,
+                  })
+                }
+              >
+                Submit
+              </button>
+              <button className="button" onClick={this.closeModal}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </Modal>
       </div>
     );
   }
