@@ -13,7 +13,7 @@ import Question from './Question';
 const generateQuestionList = () => {
   const arr = [];
   for (let i = 0; i < 195; i += 1) {
-    arr.push(null);
+    arr.push('');
   }
   return arr;
 };
@@ -25,7 +25,7 @@ class TestForm extends React.Component {
       name: props.name ? props.name : '',
       scoreDate: props.scoreDate ? moment(props.scoreDate) : moment(),
       questions: props.questions ? props.questions : generateQuestionList(),
-      note: props.note ? props.note : null,
+      note: props.note ? props.note : '',
       trueValue: props.trueValue,
       falseValue: props.falseValue,
       calendarFocused: false,
@@ -38,13 +38,13 @@ class TestForm extends React.Component {
   }
   componentWillMount() {
     const convertTrueFalseToKeyValues = this.state.questions.slice().map((q) => {
-      if (q !== null) {
+      if (q !== '') {
         if (q) {
           return this.state.trueValue;
         }
         return this.state.falseValue;
       }
-      return null;
+      return q;
     });
     this.setState(() => ({ questions: convertTrueFalseToKeyValues }));
   }
@@ -81,7 +81,7 @@ class TestForm extends React.Component {
       return this.props.onSubmit({
         name: this.state.name.trim(),
         scoreDate: this.state.scoreDate.valueOf(),
-        questions: this.state.questions.map(x => x === this.state.trueValue),
+        questions: this.state.questions.map(x => (x === '' ? '' : x === this.state.trueValue)),
         note: this.state.note,
       });
     }
@@ -111,7 +111,7 @@ class TestForm extends React.Component {
   onHandleQuestionInput = (qAns, qNum, e) => {
     const questions = this.state.questions.slice();
     if (!qAns) {
-      questions[qNum - 1] = null;
+      questions[qNum - 1] = '';
     } else {
       if (this.state.emptyQs.length > 0) {
         const newEmptyQs = this.state.emptyQs.filter(x => x !== qNum);
@@ -164,13 +164,13 @@ class TestForm extends React.Component {
   };
   convertQAnswersToNewTFValues = (prevTrue) => {
     const convertQAnswersToNewTFValues = this.state.questions.slice().map((q) => {
-      if (q !== null) {
+      if (q !== '') {
         if (q === prevTrue) {
           return this.state.trueValue;
         }
         return this.state.falseValue;
       }
-      return null;
+      return q;
     });
     this.setState(() => ({ questions: convertQAnswersToNewTFValues }));
   };
@@ -292,7 +292,7 @@ class TestForm extends React.Component {
                   this.props.onSubmit({
                     name: this.state.name.trim(),
                     scoreDate: this.state.scoreDate.valueOf(),
-                    questions: this.state.questions.map(x => x === this.state.trueValue),
+                    questions: this.state.questions.map(x => (x === '' ? '' : x === this.state.trueValue)),
                     note: this.state.note,
                   })
                 }

@@ -2,8 +2,6 @@ import React from 'react';
 import keycode from 'keycode';
 import RaisedButton from 'material-ui/RaisedButton';
 
-
-
 export default class Question extends React.Component {
   constructor(props) {
     super(props);
@@ -17,30 +15,32 @@ export default class Question extends React.Component {
   }
   onBlur = () => {
     this.setState({ focused: false });
-  }
+  };
   onFocus = () => {
     this.setState({ focused: true });
-  }
+  };
   returnLabelValue = () => {
-    if (this.state.answer === null && !this.state.focused) {
+    if (this.state.answer === '' && !this.state.focused) {
       return '________';
     }
     if (this.state.focused) {
       setTimeout(() => {
-        this.setState()
+        this.setState();
       }, 500);
       return '\xa0\xa0\xa0\xa0\xa0\xa0__\xa0\xa0\xa0\xa0\xa0\xa0';
     }
-    return this.state.answer === this.props.trueValue ? `true \xa0(${this.state.answer})` : `false (${this.state.answer})`;
-  }
+    return this.state.answer === this.props.trueValue
+      ? `true \xa0(${this.state.answer})`
+      : `false (${this.state.answer})`;
+  };
   handleClickRemove = (e) => {
     e.preventDefault();
     this.setState(() => ({ answer: '' }));
     this.props.onHandleQuestionInput('', this.props.number);
-  }
+  };
   handleClickFocused = () => {
     this.setState({ focused: true });
-  }
+  };
   handleInput = (e) => {
     if (e.keyCode === 8) {
       this.props.onHandleQuestionInput('', this.props.number);
@@ -60,13 +60,13 @@ export default class Question extends React.Component {
       return this.setState(() => ({ answer, focused: false }));
     }
     return undefined;
-  }
+  };
   returnBackgroundColor = () => {
     if (this.state.focused) {
       return 'gainsboro';
     }
     return false;
-  }
+  };
   render() {
     return (
       <div className="div-around-questions">
@@ -80,16 +80,10 @@ export default class Question extends React.Component {
           primary={this.state.answer === this.props.trueValue && !this.state.focused}
           secondary={this.state.answer === this.props.falseValue && !this.state.focused}
         />
-        <button
-          className="button_clear--small"
-          onClick={e => this.handleClickRemove(e)}
-        >
+        <button className="button_clear--small" onClick={e => this.handleClickRemove(e)}>
           X
         </button>
-        <div>
-          {this.props.isUnansweredOnSubmit &&
-            <div className="error-pointer" />}
-        </div>
+        <div>{this.props.isUnansweredOnSubmit && <div className="error-pointer" />}</div>
       </div>
     );
   }

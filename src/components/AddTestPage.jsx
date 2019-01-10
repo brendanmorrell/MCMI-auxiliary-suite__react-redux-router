@@ -4,14 +4,11 @@ import { connect } from 'react-redux';
 import TestForm from './TestForm';
 import { startAddTest } from '../actions/tests';
 
-
 const AddTestPage = props => (
   <div className="site-background">
     <div className="page-header">
       <div className="content-container">
-        <h1 className="page-header__title">
-          Score New Test
-        </h1>
+        <h1 className="page-header__title">Score New Test</h1>
       </div>
     </div>
     <div className="content-container">
@@ -28,7 +25,6 @@ const AddTestPage = props => (
     </div>
   </div>
 );
-
 
 const mapStateToProps = state => ({
   trueFalseValues: state.trueFalseValues,
