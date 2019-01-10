@@ -8,7 +8,7 @@ const getScore = (results, {
   results = [null].concat(results);
   if (isInconsistency) {
     const score = pairs.reduce(
-      (acc, [first, second]) => (results[first] !== results[second] ? acc + 1 : acc),
+      (acc, [first, second]) => (results[first] !== results[second] && results[first] !== '' && results[second] !== '' ? acc + 1 : acc),
       0,
     );
     return {
@@ -25,7 +25,7 @@ const getScore = (results, {
   const { True, False } = neurotypal;
   const protoScore = prototypal.reduce((acc, x) => (results[x] ? acc + 2 : acc), 0);
   const TrueScore = True.reduce((acc, x) => (results[x] ? acc + 1 : acc), 0);
-  const FalseScore = False.reduce((acc, x) => (results[x] ? acc : acc + 1), 0);
+  const FalseScore = False.reduce((acc, x) => (!results[x] && results[x] !== '' ? acc + 1 : acc), 0);
   return {
     prototypal,
     neurotypal: { True, False },
