@@ -273,8 +273,8 @@ class TestForm extends React.Component {
         >
           <div className="modal-div">
             {!this.props.name && <h3 className="modal__title">The name field was left blank </h3>}
-            {!this.props.name && emptyQs.length && <h3 className="modal__title">&</h3>}
-            {emptyQs.length && (
+            {!this.props.name && emptyQs.length !== 0 && <h3 className="modal__title">&</h3>}
+            {emptyQs.length !== 0 && (
               <Fragment>
                 <h3 className="modal__title">The following Questions were left blank: </h3>
                 <p />
