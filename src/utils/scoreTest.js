@@ -25,12 +25,13 @@ const getScore = (results, {
   const { True, False } = neurotypal;
   const protoScore = prototypal.reduce((acc, x) => (results[x] ? acc + 2 : acc), 0);
   const TrueScore = True.reduce((acc, x) => (results[x] ? acc + 1 : acc), 0);
-  const FalseScore = False.reduce((acc, x) => (!results[x] && results[x] !== '' ? acc + 1 : acc), 0);
+  const FalseScore = False.reduce((acc, x) => (!results[x] && results[x] !== '' && results[x] !== null ? acc + 1 : acc), 0);
+
   return {
     prototypal,
     neurotypal: { True, False },
     score: {
-      base: protoScore + TrueScore - FalseScore,
+      base: protoScore + TrueScore + FalseScore,
       disclosure: 0,
       ACC: 0,
       final: null,
