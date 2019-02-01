@@ -8,7 +8,10 @@ const getScore = (results, {
   results = [null].concat(results);
   if (isInconsistency) {
     const score = pairs.reduce(
-      (acc, [first, second]) => (results[first] !== results[second] && results[first] !== '' && results[second] !== '' ? acc + 1 : acc),
+      (acc, [first, second]) =>
+        (results[first] !== results[second] && results[first] !== '' && results[second] !== ''
+          ? acc + 1
+          : acc),
       0,
     );
     return {
@@ -25,7 +28,10 @@ const getScore = (results, {
   const { True, False } = neurotypal;
   const protoScore = prototypal.reduce((acc, x) => (results[x] ? acc + 2 : acc), 0);
   const TrueScore = True.reduce((acc, x) => (results[x] ? acc + 1 : acc), 0);
-  const FalseScore = False.reduce((acc, x) => (!results[x] && results[x] !== '' && results[x] !== null ? acc + 1 : acc), 0);
+  const FalseScore = False.reduce(
+    (acc, x) => (!results[x] && results[x] !== '' && results[x] !== null ? acc + 1 : acc),
+    0,
+  );
 
   return {
     prototypal,
@@ -44,7 +50,7 @@ const calculateScores = (results, scaleObj) => {
   return scoredScales;
 };
 const disclosureAdjustment = (scores) => {
-  const isSPP = {
+  const is18B = {
     schizoid: true,
     avoidant: true,
     melancholic: true,
@@ -58,7 +64,7 @@ const disclosureAdjustment = (scores) => {
     negativistic: true,
     masochistic: true,
   };
-  const is18B = {
+  const isSPP = {
     schizotypal: true,
     borderline: true,
     paranoid: true,
@@ -109,7 +115,7 @@ const disclosureAdjustment = (scores) => {
         break;
       }
     }
-    for (let key in scores) {
+    for (const key in scores) {
       if (is18B[key]) {
         result[key] = {
           ...scores[key],
@@ -207,9 +213,9 @@ const invalidityChecks = (scores) => {
   if (scores.invalidity.score.base > 1) scores.invalidTest.invalidity = true;
   const allOneThrough8BUnder60 = oneThrough8B.every(score => score < 60);
   if (allOneThrough8BUnder60) scores.invalidTest.noClearPersonalityPattern = true;
-  const blankQs = temp.reduce((acc, q) => q === '' ? acc + 1: acc, 0);
-	if (blankQs > 13) scores.invalidTest.fourteenOrMoreBlankQuestions = true;
-  
+  const blankQs = temp.reduce((acc, q) => (q === '' ? acc + 1 : acc), 0);
+  if (blankQs > 13) scores.invalidTest.fourteenOrMoreBlankQuestions = true;
+
   return scores;
 };
 const scoringScale = {
