@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build:dev": "webpack --env development",
-    "build:prod": "webpack -p --env production",
+    "build": "node -v;webpack -p --env production",
     "dev-server": "webpack-dev-server",
     "test": "jest --watch",
     "start": "node server/server.js",
